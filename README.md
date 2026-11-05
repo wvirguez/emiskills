@@ -11,4 +11,16 @@
 * **Diseño Responsive:** Interfaz moderna, rápida y adaptada a dispositivos móviles manteniendo los estilos actuales.
 * **Panel de Administración:** Gestión de productos manuales (otros productores) y métricas de clics.
 * **Entorno de Ingeniería (SDD con IA):** Uso estricto de especificaciones en Markdown para guiar a agentes locales (**Claude Code**, **OpenCode** u **Ollama** vía VS Code) en la generación de código limpio, tipado y testeado.
+
+## 🧪 Pruebas
+
+```bash
+# Ejecutar todos los tests una vez (modo CI)
+npm test
+
+# Iniciar Vitest en modo observación (watch)
+npm run test:watch
+```
+
+El test de humo (`components/Hero.test.tsx`) verifica que el componente `Hero` se renderice correctamente con su mensaje principal.
  

@@ -12,7 +12,7 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 
 ## Bloque A — Fundamentos
 - [x] **Fase 3:** Limpiar y auditar el código existente (landing actual, dependencia `react-icon` duplicada, lint limpio).
-- [ ] **Fase 4:** Configurar Vitest y un test de humo.
+- [x] **Fase 4:** Configurar Vitest y un test de humo.
 - [ ] **Fase 5:** MySQL local + ORM configurado (conexión y variables de entorno).
 - [ ] **Fase 6:** Esquema inicial: `Product`, `Category`, `Platform` + primera migración y seed.
 
