@@ -1,6 +1,6 @@
 // src/components/Hero.tsx
 import Link from "next/link";
-import Image from "next/image";
+import HeroIllustration from "@/components/HeroIllustration";
 
 export default function Hero() {
   return (
@@ -56,19 +56,8 @@ export default function Hero() {
               <div className="absolute -inset-6 rounded-full border border-fuchsia-200/40" />
 
               {/* Placeholder for the girl image - replace with real image later */}
-              <div className="absolute inset-4 overflow-hidden rounded-full bg-gradient-to-b from-violet-100 to-fuchsia-50 flex items-end justify-center">
-                {/* Temporary avatar placeholder - replace src with your image */}
-                <div className="relative h-full w-full">
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[90%] rounded-t-full bg-gradient-to-t from-violet-200 to-transparent flex items-end justify-center">
-                    <svg
-                      className="h-40 w-40 text-violet-400/80 mb-4"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                    </svg>
-                  </div>
-                </div>
+              <div className="absolute inset-4 overflow-hidden rounded-full bg-gradient-to-b from-violet-100 to-fuchsia-50 flex items-center justify-center p-4">
+                <HeroIllustration />
               </div>
             </div>
 

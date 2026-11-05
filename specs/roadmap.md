@@ -8,7 +8,7 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 
 ## Bloque 0 — Prioridad actual (TODO.md · Ahora)
 - [x] **Fase 1:** Ajustar el FrontPage para que se vea como un hub profesional de productos digitales (estructura, textos, secciones, estilo).
-- [ ] **Fase 2:** Cambiar la imagen derecha del Hero, manteniendo el mensaje de la izquierda.
+- [x] **Fase 2:** Cambiar la imagen derecha del Hero, manteniendo el mensaje de la izquierda.
 
 ## Bloque A — Fundamentos
 - [ ] **Fase 3:** Limpiar y auditar el código existente (landing actual, dependencia `react-icon` duplicada, lint limpio).
