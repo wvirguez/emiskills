@@ -3,7 +3,7 @@ import Partners from "@/components/Partners"
 import Categories from "@/components/Categories"
 import SearchCourses from "@/components/SearchCourses"
 import FeaturedProducts from "@/components/FeaturedProducts"
-import HowItWorks from "@//components/HowItWorks"
+import HowItWorks from "@/components/HowItWorks"
 import AffiliateDisclosure from "@/components/AffiliateDisclosure"
 import FinalCTA from "@/components/FinalCTA"
 

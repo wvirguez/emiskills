@@ -32,9 +32,9 @@
 - [x] Actualizar `FinalCTA`: quitar "1000+ Clientes Felices", texto coherente con el hub.
 
 ## 8. Aviso de afiliados, Navbar y Footer
-- [ ] Componente `AffiliateDisclosure` visible en la landing.
-- [ ] Navbar: etiquetas/enlaces a secciones nuevas.
-- [ ] Footer: aviso de afiliados y retirar anclas sin destino.
+- [x] Componente `AffiliateDisclosure` visible en la landing.
+- [x] Navbar: etiquetas/enlaces a secciones nuevas.
+- [x] Footer: aviso de afiliados y retirar anclas sin destino.
 
 ## 9. Composición de la página
 - [x] Ordenar en `app/page.tsx`: Hero → plataformas → categorías → búsqueda → destacados → cómo funciona → aviso → CTA final.

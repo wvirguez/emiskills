@@ -1,7 +1,6 @@
 'use client';
 // src/components/Footer.tsx
 import Link from "next/link";
-import AffiliateDisclosure from "@/components/AffiliateDisclosure";
 
 export default function Footer() {
   return (
@@ -70,36 +69,9 @@ export default function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
               Aviso de afiliados
             </h3>
-            <AffiliateDisclosure />
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
-              Support
-            </h3>
-            <ul className="space-y-3 text-sm">
-              <li>
-                <Link href="#help" className="hover:text-violet-400 transition-colors">
-                  Centro de Ayuda
-                </Link>
-              </li>
-              <li>
-                <Link href="#faq" className="hover:text-violet-400 transition-colors">
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link href="#privacy" className="hover:text-violet-400 transition-colors">
-                  Políticas de Privacidad
-                </Link>
-              </li>
-              <li>
-                <Link href="#terms" className="hover:text-violet-400 transition-colors">
-                  Términos de Servicios
-                </Link>
-              </li>
-            </ul>
+            <p className="text-sm leading-relaxed text-gray-400">
+              <strong>Divulgación:</strong> EmiSkills es un hub de productos digitales que muestra ofertas de varios productores. Cuando haces clic en un producto y te registras o compras en la plataforma del productor, podemos recibir una comisión por referencia. Las comisiones no influyen en el orden ni en la presentación de los productos.
+            </p>
           </div>
 
           {/* Contact / Social */}

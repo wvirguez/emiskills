@@ -15,9 +15,28 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-purple-100 shadow-sm">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <nav className="mx-auto flex max-w-7xl items-center px-4 py-3 sm:px-6 lg:px-8">
+        {/* Mobile menu button — left side */}
+        <button
+          type="button"
+          className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-violet-50 hover:text-violet-600 md:hidden"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-label="Toggle navigation"
+        >
+          {isOpen ? (
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
+
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center gap-2 group ml-3 md:ml-0">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-500 shadow-md group-hover:shadow-lg transition-shadow">
             <svg
               className="h-5 w-5 text-white"
@@ -38,6 +57,9 @@ export default function Navbar() {
           </span>
         </Link>
 
+        {/* Spacer — pushes desktop nav + CTA to the right */}
+        <div className="hidden md:block flex-1" />
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center md:gap-8">
           {navLinks.map((link) => (
@@ -52,7 +74,7 @@ export default function Navbar() {
         </div>
 
         {/* CTA Button - Desktop */}
-        <div className="hidden md:flex md:items-center md:gap-4">
+        <div className="hidden md:flex md:items-center md:gap-4 md:ml-8">
           <Link
             href="#productos"
             className="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-5 py-2 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:scale-105 active:scale-100"
@@ -60,25 +82,6 @@ export default function Navbar() {
             Ver productos
           </Link>
         </div>
-
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-violet-50 hover:text-violet-600 md:hidden"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-expanded={isOpen}
-          aria-label="Toggle navigation"
-        >
-          {isOpen ? (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          ) : (
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          )}
-        </button>
       </nav>
 
       {/* Mobile Navigation Panel */}
