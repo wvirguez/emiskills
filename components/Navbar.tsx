@@ -4,11 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 
 const navLinks = [
-  { href: "#who-we-are", label: "Quienes Somos?" },
-  { href: "#membership", label: "Membresia" },
-  { href: "#courses", label: "Cursos" },
-  { href: "#portfolio", label: "Portafolio" },
-  { href: "#contact", label: "Contacto" },
+  { href: "#productos", label: "Productos" },
+  { href: "#categorias", label: "Categorías" },
+  { href: "#buscar", label: "Buscar" },
+  { href: "#como-funciona", label: "Cómo funciona" },
 ];
 
 export default function Navbar() {
@@ -55,10 +54,10 @@ export default function Navbar() {
         {/* CTA Button - Desktop */}
         <div className="hidden md:flex md:items-center md:gap-4">
           <Link
-            href="#signin"
+            href="#productos"
             className="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-5 py-2 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:scale-105 active:scale-100"
           >
-            Registrate
+            Ver productos
           </Link>
         </div>
 
@@ -101,15 +100,15 @@ export default function Navbar() {
           ))}
           <div className="pt-2">
             <Link
-              href="#signin"
+              href="#productos"
               className="block w-full rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-5 py-2.5 text-center text-sm font-semibold text-white shadow-md"
               onClick={() => setIsOpen(false)}
             >
-              Sign in
+              Ver productos
             </Link>
           </div>
         </div>
       </div>
     </header>
-  );
+  )
 }

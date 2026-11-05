@@ -51,7 +51,7 @@ export default function OnlineLearning() {
 
             <p className="mt-4 text-base leading-relaxed text-gray-600">
               El nuevo y completo sistema educativo que cambiar&aacute; tu vida
-              para siempre. &Uacute;nete a los miles de estudiantes que ya aprenden con nosotros y
+              para siempre. &Uacute;nete a los miles de aprendices que ya usan nuestro sistema y
               abre la puerta a nuevas oportunidades.
             </p>
 

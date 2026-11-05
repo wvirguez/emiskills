@@ -1,13 +1,14 @@
 'use client';
 // src/components/Footer.tsx
 import Link from "next/link";
+import AffiliateDisclosure from "@/components/AffiliateDisclosure";
 
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-          
+
           {/* Brand */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
@@ -38,35 +39,38 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
-              Enlaces R&aacute;pidos
+              Enlaces rápidos
             </h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="#who-we-are" className="hover:text-violet-400 transition-colors">
-                  Quienes Somos?
+                <Link href="#productos" className="hover:text-violet-400 transition-colors">
+                  Productos
                 </Link>
               </li>
               <li>
-                <Link href="#membership" className="hover:text-violet-400 transition-colors">
-                  Membres&iacute;a
+                <Link href="#categorias" className="hover:text-violet-400 transition-colors">
+                  Categorías
                 </Link>
               </li>
               <li>
-                <Link href="#courses" className="hover:text-violet-400 transition-colors">
-                  Cursos
+                <Link href="#buscar" className="hover:text-violet-400 transition-colors">
+                  Buscar
                 </Link>
               </li>
               <li>
-                <Link href="#portfolio" className="hover:text-violet-400 transition-colors">
-                  Portafolio
-                </Link>
-              </li>
-              <li>
-                <Link href="#contact" className="hover:text-violet-400 transition-colors">
-                  Contacto
+                <Link href="#como-funciona" className="hover:text-violet-400 transition-colors">
+                  Cómo funciona
                 </Link>
               </li>
             </ul>
+          </div>
+
+          {/* Affiliate Disclosure */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
+              Aviso de afiliados
+            </h3>
+            <AffiliateDisclosure />
           </div>
 
           {/* Support */}
@@ -87,12 +91,12 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="#privacy" className="hover:text-violet-400 transition-colors">
-                  Pol&iacute;ticas de Privacidad
+                  Políticas de Privacidad
                 </Link>
               </li>
               <li>
                 <Link href="#terms" className="hover:text-violet-400 transition-colors">
-                  Termino de Servicios
+                  Términos de Servicios
                 </Link>
               </li>
             </ul>
@@ -147,10 +151,10 @@ export default function Footer() {
             © {new Date().getFullYear()} EmiSkills. Todos los Derechos Reservados.
           </p>
           <p className="text-sm text-gray-500">
-            Dise&ntilde;ado con ❤️ para estudiantes de todo el Mundo
+            Diseñado con ❤️ para visitantes de todo el Mundo
           </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

@@ -5,7 +5,7 @@
 Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable y tiene su spec en `specs/` antes de implementarse.
 
 ## Bloque 0 — Prioridad actual (TODO.md · Ahora)
-- **Fase 1:** Ajustar el FrontPage para que se vea como un hub profesional de productos digitales (estructura, textos, secciones, estilo).
+- **Fase 1:** Ajustar el FrontPage para que se vea como un hub profesional de productos digitales (estructura, textos, secciones, estilo). ✅ completada
 - **Fase 2:** Cambiar la imagen derecha del Hero, manteniendo el mensaje de la izquierda.
 
 ## Bloque A — Fundamentos

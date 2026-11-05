@@ -23,8 +23,8 @@ const tangerine = Tangerine({
 });
 
 export const metadata: Metadata = {
-  title: "EmiSkills",
-  description: "Hub de Productos",
+  title: "EmiSkills - Hub de Productos Digitales",
+  description: "Marketplace de productos digitales - cursos, ebooks, plantillas y membresías. Curaduría honesta para ayudarte a elegir el producto correcto.",
 };
 
 

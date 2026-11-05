@@ -10,26 +10,27 @@ export default function FinalCTA() {
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          
+
           {/* Left Content */}
           <div className="text-center lg:text-left order-2 lg:order-1">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
-              Estamos encantados de que te unas a nosotros.{" "}
+              ¡Gracias por visitar EmiSkills!
               <span className="bg-gradient-to-r from-violet-600 to-fuchsia-500 bg-clip-text text-transparent">
-                ¡En este emocionante viaje!
+                ¡Estamos aquí para ayudarte a encontrar lo que necesitas!
               </span>
             </h2>
 
             <p className="mt-6 max-w-xl text-base leading-relaxed text-gray-600 mx-auto lg:mx-0">
-              No dudes en contactarnos si tienes alguna pregunta o necesitas más ayuda. Estamos aquí para ayudarte en todo momento.
+              Explora nuestro catálogo de productos digitales, elige el que mejor se adapte a tus necesidades y
+              accede directamente a la plataforma del productor. Tu aprendizaje comienza aquí.
             </p>
 
             <div className="mt-10">
               <Link
-                href="#join"
+                href="#productos"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 active:scale-100"
               >
-                Únete a Nosotros
+                Ver productos
                 <svg
                   className="h-5 w-5"
                   fill="none"
@@ -74,7 +75,7 @@ export default function FinalCTA() {
               </div>
             </div>
 
-            {/* Floating badge - 1000+ */}
+            {/* Floating badge - Catálogo variado */}
             <div className="absolute -left-2 top-6 sm:left-0 sm:top-10 rounded-2xl bg-white px-4 py-3 shadow-xl ring-1 ring-black/5">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100">
@@ -93,8 +94,8 @@ export default function FinalCTA() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-gray-900">1000+</p>
-                  <p className="text-xs text-gray-500">Clientes Felices</p>
+                  <p className="text-lg font-bold text-gray-900">Catálogo variado</p>
+                  <p className="text-xs text-gray-500">Productos digitales</p>
                 </div>
               </div>
             </div>
@@ -102,5 +103,5 @@ export default function FinalCTA() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -45,7 +45,7 @@ export default function PopularCourses() {
           </h2>
           <p className="mt-4 text-base leading-relaxed text-gray-600">
             Estos temas ofrecen un marco integral para estructurar tus
-            objetivos y resultan atractivos tanto para principiantes como para estudiantes avanzados. Explora
+            objetivos y resultan atractivos tanto para principiantes como para aprendices avanzados. Explora
             las áreas que más te interesen.
           </p>
         </div>

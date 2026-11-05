@@ -30,13 +30,13 @@ export default function Hero() {
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
               <Link
-                href="#get-proposal"
+                href="#productos"
                 className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 active:scale-100"
               >
                 Obten una Propuesta
               </Link>
               <Link
-                href="#try-now"
+                href="#como-funciona"
                 className="inline-flex items-center justify-center rounded-full border-2 border-violet-600 bg-white px-8 py-3.5 text-base font-semibold text-violet-600 transition-all hover:bg-violet-50 hover:scale-105 active:scale-100"
               >
                 Intentalo Ahora!
@@ -72,7 +72,7 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Floating badge - Students */}
+            {/* Floating badge - Productos digitales */}
             <div className="absolute -left-2 top-8 sm:left-0 sm:top-12 rounded-2xl bg-white px-4 py-3 shadow-xl ring-1 ring-black/5">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-violet-100">
@@ -91,13 +91,13 @@ export default function Hero() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-gray-900">1000+</p>
-                  <p className="text-xs text-gray-500">Estudiantes</p>
+                  <p className="text-lg font-bold text-gray-900">Productos digitales</p>
+                  <p className="text-xs text-gray-500">Catálogo variado</p>
                 </div>
               </div>
             </div>
 
-            {/* Floating badge - Courses */}
+            {/* Floating badge - Cursos y Recursos */}
             <div className="absolute -right-2 bottom-16 sm:right-0 sm:bottom-20 rounded-2xl bg-white px-4 py-3 shadow-xl ring-1 ring-black/5">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-fuchsia-100">
@@ -116,8 +116,8 @@ export default function Hero() {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-lg font-bold text-gray-900">120+</p>
-                  <p className="text-xs text-gray-500">Cursos</p>
+                  <p className="text-lg font-bold text-gray-900">Cursos y Recursos</p>
+                  <p className="text-xs text-gray-500">Amplia selección</p>
                 </div>
               </div>
             </div>
