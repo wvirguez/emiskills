@@ -17,7 +17,7 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 - [x] **Fase 6:** Esquema inicial: `Product`, `Category`, `Platform` + primera migración y seed.
 
 ## Bloque B — Catálogo público
-- [ ] **Fase 7:** Capa de datos: consultas de listado y detalle de productos (con tests).
+- [x] **Fase 7:** Capa de datos: consultas de listado y detalle de productos (con tests).
 - [ ] **Fase 8:** Listado de productos en la landing con datos reales (reemplaza datos de ejemplo).
 - [ ] **Fase 9:** Página de detalle de producto (información clara y honesta).
 - [ ] **Fase 10:** Buscador: texto + filtro por categoría.
