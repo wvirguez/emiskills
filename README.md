@@ -24,3 +24,27 @@ npm run test:watch
 
 El test de humo (`components/Hero.test.tsx`) verifica que el componente `Hero` se renderice correctamente con su mensaje principal.
  
+
+
+## 🗄️ Base de datos local (MySQL + Prisma)
+
+```bash
+# 1. Instalar e iniciar MySQL con Homebrew
+brew install mysql
+brew services start mysql
+
+# 2. Crear la base de datos y el usuario de desarrollo
+mysql -u root -e "CREATE DATABASE emiskills CHARACTER SET utf8mb4;
+  CREATE USER 'emiskills'@'localhost' IDENTIFIED BY 'TU_CLAVE';
+  GRANT ALL PRIVILEGES ON emiskills.* TO 'emiskills'@'localhost';"
+
+# 3. Configurar variables de entorno (.env no se versiona)
+cp .env.example .env   # edita DATABASE_URL con tu clave
+
+# 4. Verificar la conexión
+npm run db:check
+```
+
+Scripts: `db:generate` (cliente Prisma), `db:migrate`, `db:studio`, `db:check`.
+`DATABASE_URL` incluye `connection_limit=3` para respetar los límites del hosting compartido (Hostinger).
+El cliente se importa desde `@/lib/db` (`import { db } from "@/lib/db"`).
