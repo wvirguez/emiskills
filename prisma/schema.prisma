@@ -1,8 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -10,4 +8,49 @@ generator client {
 
 datasource db {
   provider = "mysql"
+}
+
+model Platform {
+  id        Int       @id @default(autoincrement())
+  slug      String    @unique @db.VarChar(50)
+  name      String    @db.VarChar(100)
+  products  Product[]
+
+  @@map("platforms")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  slug      String    @unique @db.VarChar(50)
+  name      String    @db.VarChar(100)
+  products  Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id                Int       @id @default(autoincrement())
+  slug              String    @unique @db.VarChar(150)
+  title             String    @db.VarChar(200)
+  shortDescription  String    @db.Text
+  description       String?   @db.Text
+  price             Decimal   @db.Decimal(10, 2)
+  currency          String    @db.Char(3)
+  language          String    @default("es") @db.Char(2)
+  imageUrl          String?   @db.VarChar(500)
+  imageGradient     String?   @db.VarChar(100)
+  affiliateUrl      String    @db.VarChar(500)
+  isActive          Boolean   @default(true)
+  categoryId        Int
+  platformId        Int
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  category  Category  @relation(fields: [categoryId], references: [id])
+  platform  Platform  @relation(fields: [platformId], references: [id])
+
+  @@index([categoryId])
+  @@index([platformId])
+  @@index([isActive])
+  @@map("products")
 }

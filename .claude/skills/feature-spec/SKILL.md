@@ -31,7 +31,7 @@ Usa `AskUserQuestion` con exactamente **3 preguntas en una sola llamada**:
 
 | **Decisiones** | Opciones clave de implementación: almacenamiento, visibilidad, validación, patrón de UX |
 
-| **Contexto** | Tono, restricciones o cualquier otro aspecto que defina la especificación: nivel de texto satírico, límites de la pila, preguntas abiertas |
+| **Contexto** | Tono, restricciones o cualquier otro aspecto que defina la especificación: tono del texto visible, límites de la pila, preguntas abiertas |
 
 No escribas ningún archivo hasta que el usuario haya respondido las tres preguntas.
 
@@ -53,15 +53,21 @@ Nombre: `specs/AAAA-MM-DD-<nombre-de-la-característica>/` usando la fecha de ho
 - Cada grupo tiene subtareas numeradas; los grupos deben poder implementarse de forma independiente.
 
 #### `validation.md`
-- Automatizado: `npm test` y `npm run typecheck` pasan. Se requieren afirmaciones específicas
+- Automatizado: `npm test`, `npm run lint` y `npx tsc --noEmit` pasan. Se requieren afirmaciones específicas
 - Manual: recorrido por el navegador, comportamiento del formulario, casos límite
 - Verificación del tono si la función tiene texto visible para el usuario
 - Definición de "terminado"
 
 ## Restricciones de la pila
 
-- Hono 4.x + Hono JSX (SSR) + SQLite mediante `better-sqlite3` + Vitest: no se añadirán nuevas dependencias sin la aprobación del usuario
-- Los formularios POST utilizan POST/redirect/GET
-- No se utiliza JavaScript del lado del cliente
-- Las migraciones se encuentran en `src/db/migrations/` como archivos `.sql` numerados
-- El tono satírico solo se aplica al texto de las etiquetas/marcadores de posición, no a la estructura ni a la lógica
+Fuente de verdad: `specs/tech-stack.md`. Si la especificación contradice ese archivo, gana el archivo.
+
+- **Framework:** Next.js 16 (App Router) con React 19, Tailwind CSS 4, TypeScript estricto y sin `any`. Esta versión tiene cambios incompatibles: antes de proponer APIs o convenciones, lee la guía relevante en `node_modules/next/dist/docs/`.
+- **Base de datos:** MySQL con Prisma 7 (adaptador MariaDB). El cliente se importa del singleton `lib/db.ts`; el esquema vive en `prisma/schema.prisma` y las migraciones versionadas en `prisma/migrations/` (se crean con `npm run db:migrate`). Los secretos van solo en variables de entorno validadas en `lib/env.ts`; `.env*` fuera de git.
+- **Validación:** Zod en los límites del sistema (formularios, webhooks, API).
+- **Autenticación:** solo un rol admin (sesión propia); sin cuentas de visitantes.
+- **Pruebas:** Vitest + Testing Library. Todo código nuevo lleva pruebas.
+- **Dependencias:** no se añaden nuevas sin la aprobación del usuario.
+- **Componentes:** por defecto Server Components; `"use client"` solo cuando haga falta interactividad. Las mutaciones se hacen con Server Actions o Route Handlers.
+- **Estilo y público:** mantener el estilo visual actual, diseño responsive y móvil primero (conexiones variables, páginas ligeras). Interfaz solo en español.
+- **Tono:** honesto y objetivo, sin falsas urgencias ni reseñas inventadas (ver `specs/mission.md`).

@@ -45,6 +45,25 @@ cp .env.example .env   # edita DATABASE_URL con tu clave
 npm run db:check
 ```
 
-Scripts: `db:generate` (cliente Prisma), `db:migrate`, `db:studio`, `db:check`.
+```bash
+# Migrar (crear/aplicar migraciones)
+npm run db:migrate -- --name nombre_migracion
+
+# Primera migración (esquema inicial: Product, Category, Platform)
+npm run db:migrate -- --name esquema_inicial
+
+# Regenerar cliente Prisma tras cambios en schema.prisma
+npm run db:generate
+
+# Sembrar datos iniciales (plataformas, categorías, 6 productos de ejemplo)
+npm run db:seed
+
+# Abrir Prisma Studio para inspeccionar la BD
+npm run db:studio
+```
+
+Scripts: `db:generate` (cliente Prisma), `db:migrate`, `db:seed`, `db:studio`, `db:check`.
 `DATABASE_URL` incluye `connection_limit=3` para respetar los límites del hosting compartido (Hostinger).
 El cliente se importa desde `@/lib/db` (`import { db } from "@/lib/db"`).
+
+> **Nota:** Las URLs de afiliado en el seed son ficticias (`https://example.com/...`) y no representan afiliaciones reales.
