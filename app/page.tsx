@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import Hero from "@/components/Hero"
 import Partners from "@/components/Partners"
 import Categories from "@/components/Categories"
@@ -14,7 +15,9 @@ export default function Home() {
       <Partners />
       <Categories />
       <SearchCourses />
-      <FeaturedProducts />
+      <Suspense fallback={<section className="h-96 bg-violet-50" aria-hidden="true" />}>
+        <FeaturedProducts />
+      </Suspense>
       <HowItWorks />
       <AffiliateDisclosure />
       <FinalCTA />
