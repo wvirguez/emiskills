@@ -4,6 +4,12 @@
 
 - Feat: Buscador de productos: nueva página `/productos` con búsqueda por texto y filtro por categoría, paginación y mensaje cuando no hay resultados; la portada y la sección de categorías ahora leen las categorías de la base de datos y los enlaces del menú funcionan también fuera de la portada
 - Docs: `specs/tech-stack.md` actualizado: la base de datos MySQL es local (no Docker) y su dirección de acceso vive en `.env`
+- Docs: Se incorporaron nuevas fases al roadmap (CTAs del Hero, eliminación de aliados, botón Inicio, franja de beneficios, categorías con scroll y pulido responsive)
+- Feat: Filtros de productos por precio, idioma y plataforma en `/productos`, combinables con la búsqueda por texto y categoría
+- Feat: Botones del Hero actualizados: "COMPRAR AHORA" (lleva a `/productos`) y "VER CATEGORÍAS" (lleva a la sección de categorías)
+- Feat: Se eliminó de la portada la sección "Plataformas de origen de los productos"; el Footer ahora indica que el catálogo reúne productos de Hotmart y de otros productores
+- Feat: Botón "Inicio" en la barra de navegación (escritorio y menú móvil) que lleva a la portada
+- Feat: Franja de 4 beneficios con íconos (Alta Calidad, Acceso Instantáneo, Pago Seguro y Gran Apoyo) justo debajo del Hero en la portada
 
 ## 2026-11-06
 
