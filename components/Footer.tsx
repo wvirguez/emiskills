@@ -33,6 +33,9 @@ export default function Footer() {
             <p className="text-sm leading-relaxed text-gray-400 max-w-xs">
               Libera tu potencial. Explora, aprende y crece con los mejores productos digitales y cursos en línea.
             </p>
+            <p className="text-sm leading-relaxed text-gray-400 max-w-xs">
+              Reunimos productos de Hotmart y de otros productores.
+            </p>
           </div>
 
           {/* Quick Links */}

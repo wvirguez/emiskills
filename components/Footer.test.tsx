@@ -15,4 +15,9 @@ describe("Footer", () => {
       expect(screen.getByRole("link", { name })).toHaveAttribute("href", href);
     }
   });
+
+  it("informa el origen de los productos", () => {
+    render(<Footer />);
+    expect(screen.getByText(/Hotmart y de otros productores/)).toBeInTheDocument();
+  });
 });
