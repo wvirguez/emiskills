@@ -10,6 +10,8 @@
 - Feat: Se eliminó de la portada la sección "Plataformas de origen de los productos"; el Footer ahora indica que el catálogo reúne productos de Hotmart y de otros productores
 - Feat: Botón "Inicio" en la barra de navegación (escritorio y menú móvil) que lleva a la portada
 - Feat: Franja de 4 beneficios con íconos (Alta Calidad, Acceso Instantáneo, Pago Seguro y Gran Apoyo) justo debajo del Hero en la portada
+- Docs: Nueva habilidad `spec-implemeter` para implementar un plan de especificación grupo por grupo y entregar una revisión con los errores críticos
+- Feat: La sección "Categorías" de la portada ahora muestra un carrusel horizontal de tarjetas de producto con botones de desplazamiento; al elegir una categoría (o "Todos") se filtran los productos mediante `?categoria=` en la URL
 
 ## 2026-11-06
 
