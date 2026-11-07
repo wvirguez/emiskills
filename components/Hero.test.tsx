@@ -11,4 +11,19 @@ describe("Hero (test de humo)", () => {
     expect(heading).toHaveTextContent("con Nosotros");
     expect(heading).toHaveTextContent("Explora, Aprende y Crece!");
   });
+
+  it("muestra los CTAs con sus destinos", () => {
+    render(<Hero />);
+    expect(screen.getByRole("link", { name: "COMPRAR AHORA" })).toHaveAttribute("href", "/productos");
+    expect(screen.getByRole("link", { name: "VER CATEGORÍAS" })).toHaveAttribute(
+      "href",
+      "/#categorias",
+    );
+  });
+
+  it("ya no muestra los textos anteriores", () => {
+    render(<Hero />);
+    expect(screen.queryByText("Obten una Propuesta")).not.toBeInTheDocument();
+    expect(screen.queryByText("Intentalo Ahora!")).not.toBeInTheDocument();
+  });
 });

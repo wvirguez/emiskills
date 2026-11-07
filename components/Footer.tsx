@@ -42,22 +42,22 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="#productos" className="hover:text-violet-400 transition-colors">
+                <Link href="/#productos" className="hover:text-violet-400 transition-colors">
                   Productos
                 </Link>
               </li>
               <li>
-                <Link href="#categorias" className="hover:text-violet-400 transition-colors">
+                <Link href="/#categorias" className="hover:text-violet-400 transition-colors">
                   Categorías
                 </Link>
               </li>
               <li>
-                <Link href="#buscar" className="hover:text-violet-400 transition-colors">
+                <Link href="/#buscar" className="hover:text-violet-400 transition-colors">
                   Buscar
                 </Link>
               </li>
               <li>
-                <Link href="#como-funciona" className="hover:text-violet-400 transition-colors">
+                <Link href="/#como-funciona" className="hover:text-violet-400 transition-colors">
                   Cómo funciona
                 </Link>
               </li>

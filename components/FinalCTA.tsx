@@ -27,7 +27,7 @@ export default function FinalCTA() {
 
             <div className="mt-10">
               <Link
-                href="#productos"
+                href="/productos"
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 active:scale-100"
               >
                 Ver productos

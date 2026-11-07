@@ -30,16 +30,16 @@ export default function Hero() {
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
               <Link
-                href="#productos"
+                href="/productos"
                 className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 active:scale-100"
               >
-                Obten una Propuesta
+                COMPRAR AHORA
               </Link>
               <Link
-                href="#como-funciona"
+                href="/#categorias"
                 className="inline-flex items-center justify-center rounded-full border-2 border-violet-600 bg-white px-8 py-3.5 text-base font-semibold text-violet-600 transition-all hover:bg-violet-50 hover:scale-105 active:scale-100"
               >
-                Intentalo Ahora!
+                VER CATEGORÍAS
               </Link>
             </div>
           </div>
