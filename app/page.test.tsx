@@ -26,4 +26,13 @@ describe("Landing", () => {
     }
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
   });
-});
+
+  it("muestra la franja de beneficios entre el Hero y Categorías", () => {
+    const { container } = render(<Home />)
+    const franja = screen.getByRole("region", { name: "Beneficios" })
+    const h1 = screen.getByRole("heading", { level: 1 })
+    const categorias = container.querySelector("#categorias")!
+    expect(h1.compareDocumentPosition(franja) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(franja.compareDocumentPosition(categorias) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+})

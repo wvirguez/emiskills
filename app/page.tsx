@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import Hero from "@/components/Hero"
+import Benefits from "@/components/Benefits"
 import Categories from "@/components/Categories"
 import SearchCourses from "@/components/SearchCourses"
 import FeaturedProducts from "@/components/FeaturedProducts"
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Benefits />
       <Categories />
       <SearchCourses />
       <Suspense fallback={<section className="h-96 bg-violet-50" aria-hidden="true" />}>
