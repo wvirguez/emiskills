@@ -34,7 +34,14 @@ export type ProductPage = {
 export type CategoryDTO = { id: number; slug: string; name: string };
 export type PlatformDTO = { id: number; slug: string; name: string };
 
-export type GetProductsParams = { page?: number; pageSize?: number };
+export type GetProductsParams = {
+  page?: number;
+  pageSize?: number;
+  /** Texto a buscar en título y descripción corta. */
+  q?: string;
+  /** Slug de categoría. */
+  categorySlug?: string;
+};
 
 const pageSchema = z.number().int().min(1).catch(1);
 const pageSizeSchema = z
@@ -43,6 +50,11 @@ const pageSizeSchema = z
   .min(1)
   .max(MAX_PAGE_SIZE)
   .catch(DEFAULT_PAGE_SIZE);
+
+/** Escapa los comodines de LIKE (% _ \\) para que el texto se busque literalmente. */
+export function escapeLike(text: string): string {
+  return text.replace(/[\\%_]/g, (c) => `\\${c}`);
+}
 
 const productInclude = {
   category: { select: { slug: true, name: true } },
@@ -86,7 +98,21 @@ export async function getProducts(
 ): Promise<ProductPage> {
   const page = pageSchema.parse(params.page);
   const pageSize = pageSizeSchema.parse(params.pageSize ?? DEFAULT_PAGE_SIZE);
-  const where = { isActive: true };
+  const q = params.q?.trim() ? escapeLike(params.q.trim()) : undefined;
+  const where = {
+    isActive: true,
+    ...(params.categorySlug
+      ? { category: { slug: params.categorySlug } }
+      : {}),
+    ...(q
+      ? {
+          OR: [
+            { title: { contains: q } },
+            { shortDescription: { contains: q } },
+          ],
+        }
+      : {}),
+  };
 
   const [rows, total] = await Promise.all([
     db.product.findMany({

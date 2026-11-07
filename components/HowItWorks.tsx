@@ -1,7 +1,7 @@
 // src/components/HowItWorks.tsx
 export default function HowItWorks() {
   return (
-    <section className="bg-white py-16 sm:py-20">
+    <section id="como-funciona" className="bg-white py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8">

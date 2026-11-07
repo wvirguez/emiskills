@@ -91,6 +91,39 @@ describe("getProducts", () => {
     expect(res.total).toBe(30);
   });
 
+  it("filtra por texto en título y descripción corta", async () => {
+    await getProducts({ q: "  java  " });
+    const args = mocks.productFindMany.mock.calls[0][0];
+    const countArgs = mocks.productCount.mock.calls[0][0];
+    expect(args.where).toEqual({
+      isActive: true,
+      OR: [
+        { title: { contains: "java" } },
+        { shortDescription: { contains: "java" } },
+      ],
+    });
+    expect(countArgs.where).toEqual(args.where);
+  });
+
+  it("filtra por categoría y combina con texto", async () => {
+    await getProducts({ categorySlug: "curso", q: "java" });
+    const args = mocks.productFindMany.mock.calls[0][0];
+    expect(args.where.isActive).toBe(true);
+    expect(args.where.category).toEqual({ slug: "curso" });
+    expect(args.where.OR).toHaveLength(2);
+  });
+
+  it("escapa los comodines de LIKE en q", async () => {
+    await getProducts({ q: "50%_\\x" });
+    const or = mocks.productFindMany.mock.calls[0][0].where.OR;
+    expect(or[0]).toEqual({ title: { contains: "50\\%\\_\\\\x" } });
+  });
+
+  it("ignora q vacío", async () => {
+    await getProducts({ q: "   " });
+    expect(mocks.productFindMany.mock.calls[0][0].where).toEqual({ isActive: true });
+  });
+
   it("mapea a DTO sin campos internos", async () => {
     const { items } = await getProducts();
     expect(typeof items[0].price).toBe("number");

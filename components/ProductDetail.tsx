@@ -12,7 +12,7 @@ export default function ProductDetail({ product }: { product: ProductDTO }) {
     <section className="bg-gradient-to-b from-violet-50 to-white py-10 sm:py-16">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <Link
-          href="/#productos"
+          href="/productos"
           className="text-sm font-medium text-violet-700 hover:text-violet-900"
         >
           ← Volver al catálogo

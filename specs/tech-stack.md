@@ -11,14 +11,21 @@
 ## Decisiones para cubrir las brechas
 | Área | Decisión | Notas |
 |---|---|---|
-| Base de datos | **MySQL** | Hostinger ofrece MySQL nativo. |
-| Acceso a datos | ORM tipado (propuesto: **Prisma** con provider `mysql`; validar compatibilidad al implementar) | Migraciones versionadas. |
+| Base de datos | **MySQL 8.4 instalado localmente** en esta máquina (no Docker) | La dirección de acceso (`DATABASE_URL`: host, puerto, usuario, contraseña y base `emiskills`) vive solo en `.env` (fuera de git; plantilla en `.env.example`). Hostinger ofrece MySQL nativo para producción. |
+| Acceso a datos | **Prisma 7** con provider `mysql` y adaptador MariaDB (`@prisma/adapter-mariadb`) | Migraciones versionadas en `prisma/migrations/`; cliente en `lib/db.ts`; variables validadas en `lib/env.ts`. |
 | Autenticación admin | Sesión propia para un único rol admin (propuesto: **Auth.js** con credenciales, o JWT en cookie httpOnly) | Sin cuentas de visitantes. |
 | Validación | **Zod** en límites (formularios, webhooks, API) | |
 | Integración | API de **Hotmart Developers** + webhooks | Verificar firma/token del webhook. |
 | Pruebas | **Vitest** (unitarias) + Testing Library; Playwright opcional para flujos clave | |
-| Desarrollo | 100 % local primero (MySQL local, p. ej. Docker o instalación nativa) | |
+| Desarrollo | 100 % local primero, con el MySQL local instalado en la máquina; **no usar el contenedor Docker** para pruebas ni verificaciones | Si el puerto del `.env` no coincide con el del servidor local, corregir el `.env`; no apuntar a otra instancia. |
 | Despliegue | **Hostinger** (hosting con Node.js) tras terminar el desarrollo local | Variables de entorno en el panel; `next build` + `next start`. |
+
+## Base de datos local
+- **Fuente de verdad de la conexión:** `DATABASE_URL` en `.env`. Las pruebas manuales, `npm run db:check`, `npm run db:migrate`, `npm run db:seed` y `npm run build && npm start` usan esa variable. No se escriben credenciales en specs, código ni commits.
+- **Autenticación MySQL 8.4:** el usuario de la app debe usar `caching_sha2_password` (el motor de migraciones de Prisma no soporta `sha256_password`; `mysql_native_password` viene desactivado en 8.4).
+- **Conexión sin TLS:** la URL lleva `allowPublicKeyRetrieval=true`; sin esa opción el adaptador falla con `RSA public key is not available client side`.
+- **Verificación rápida:** `npm run db:check` debe responder "Conexión a MySQL OK"; después aplicar `npx prisma migrate deploy` y `npm run db:seed` (idempotente, usa `upsert`).
+- **Diagnóstico:** Prisma muestra `pool failed to retrieve a connection` (código 45028) para cualquier fallo de conexión; el motivo real (credenciales, plugin de autenticación, puerto) se ve conectando con el cliente `mysql` o el conector `mariadb` directamente.
 
 ## Riesgos / puntos abiertos
 - Confirmar que el plan de Hostinger contratado soporta aplicaciones Node.js (Next.js SSR). Si no, considerar VPS.
