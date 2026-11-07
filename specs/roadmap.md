@@ -22,26 +22,31 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 - [x] **Fase 9:** Página de detalle de producto (información clara y honesta).
 - [x] **Fase 10:** Buscador: texto + filtro por categoría.
 - [ ] **Fase 11:** Filtros por precio, idioma y plataforma.
-- [ ] **Fase 12:** Pulido responsive/móvil y aviso de divulgación de afiliados.
+- [ ] **Fase 12:** CTAs del Hero: cambiar "Obten una Propuesta" por "COMPRAR AHORA" y "Intentalo Ahora!" por "EXPLORAR POR CATEGORÍAS", actualizando también sus enlaces (propuesta inicial: `/productos` y `/#categorias`; confirmar en la entrevista de la fase). Actualizar `Hero.test.tsx`.
+- [ ] **Fase 13:** Eliminar la sección "Plataformas de origen de los productos" de la landing (`Partners`) y su uso en `app/page.tsx`; retirar el componente y los tests/imports que queden sin uso.
+- [ ] **Fase 14:** Botón "Inicio" en la barra de navegación (escritorio y menú móvil) que lleva a la Home Page (`/`).
+- [ ] **Fase 15:** Franja horizontal de 4 beneficios con íconos en la landing: "Alta Calidad" (Productos Premium y útiles), "Acceso Instantáneo" (Descarga inmediata después de comprar), "Pago Seguro" (Pagos seguros y encriptados) y "Gran Apoyo" (Estamos aquí para ayudarte en cualquier momento). Revisar con la misión que los textos no prometan algo que los productores no garanticen (la venta ocurre en la plataforma del productor).
+- [ ] **Fase 16:** Sección "Categorías" con scroll horizontal de tarjetas medianas de productos: al hacer clic en una categoría, el scroll muestra solo los productos de esa categoría (por defecto, todos). Reutiliza `getProducts` con `categorySlug`; definir en la entrevista si el cambio es por cliente o por URL.
+- [ ] **Fase 17:** Pulido responsive/móvil y aviso de divulgación de afiliados.
 
 ## Bloque C — Enlaces de afiliado y clics
-- [ ] **Fase 13:** Ruta `/go/[slug]` que redirige al enlace de afiliado parametrizado.
-- [ ] **Fase 14:** Registro de clics (tabla `Click`) en cada redirección.
+- [ ] **Fase 18:** Ruta `/go/[slug]` que redirige al enlace de afiliado parametrizado.
+- [ ] **Fase 19:** Registro de clics (tabla `Click`) en cada redirección.
 
 ## Bloque D — Panel de administración
-- [ ] **Fase 15:** Autenticación del admin y protección de rutas `/admin`.
-- [ ] **Fase 16:** CRUD de categorías.
-- [ ] **Fase 17:** CRUD de productos manuales (otros productores).
-- [ ] **Fase 18:** Métricas de clics en el panel (por producto/categoría).
+- [ ] **Fase 20:** Autenticación del admin y protección de rutas `/admin`.
+- [ ] **Fase 21:** CRUD de categorías.
+- [ ] **Fase 22:** CRUD de productos manuales (otros productores).
+- [ ] **Fase 23:** Métricas de clics en el panel (por producto/categoría).
 
 ## Bloque E — Integración Hotmart
-- [ ] **Fase 19:** Cliente de la API de Hotmart (autenticación y lectura de productos).
-- [ ] **Fase 20:** Sincronización de productos Hotmart a la base de datos.
-- [ ] **Fase 21:** Endpoint de webhooks con verificación de firma.
-- [ ] **Fase 22:** Manejo de eventos del webhook (actualizar/desactivar productos).
+- [ ] **Fase 24:** Cliente de la API de Hotmart (autenticación y lectura de productos).
+- [ ] **Fase 25:** Sincronización de productos Hotmart a la base de datos.
+- [ ] **Fase 26:** Endpoint de webhooks con verificación de firma.
+- [ ] **Fase 27:** Manejo de eventos del webhook (actualizar/desactivar productos).
 
 ## Bloque F — Lanzamiento
-- [ ] **Fase 23:** SEO básico (metadatos, sitemap, Open Graph).
-- [ ] **Fase 24:** Revisión de rendimiento, accesibilidad y seguridad.
-- [ ] **Fase 25:** Preparar despliegue en Hostinger (build, variables, MySQL remoto).
-- [ ] **Fase 26:** Despliegue y verificación en producción.
+- [ ] **Fase 28:** SEO básico (metadatos, sitemap, Open Graph).
+- [ ] **Fase 29:** Revisión de rendimiento, accesibilidad y seguridad.
+- [ ] **Fase 30:** Preparar despliegue en Hostinger (build, variables, MySQL remoto).
+- [ ] **Fase 31:** Despliegue y verificación en producción.
