@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { ProductDTO } from "@/lib/products";
-
-const DEFAULT_GRADIENT = "from-violet-500 to-fuchsia-500";
+import { DEFAULT_GRADIENT } from "@/lib/product-ui";
 
 export default function ProductCard({ product }: { product: ProductDTO }) {
   return (

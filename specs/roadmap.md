@@ -19,7 +19,7 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 ## Bloque B — Catálogo público
 - [x] **Fase 7:** Capa de datos: consultas de listado y detalle de productos (con tests).
 - [x] **Fase 8:** Listado de productos en la landing con datos reales (reemplaza datos de ejemplo).
-- [ ] **Fase 9:** Página de detalle de producto (información clara y honesta).
+- [x] **Fase 9:** Página de detalle de producto (información clara y honesta).
 - [ ] **Fase 10:** Buscador: texto + filtro por categoría.
 - [ ] **Fase 11:** Filtros por precio, idioma y plataforma.
 - [ ] **Fase 12:** Pulido responsive/móvil y aviso de divulgación de afiliados.

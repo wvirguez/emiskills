@@ -33,10 +33,20 @@ Actualiza el archivo specs/2026-03-30-hello-hono/plan.md y la implementación de
 Update specs/2026-03-30-hello-hono/plan.md and implementation of a main layout component with a header/main footer as three subcomponents. Make a CSS file, import it, and link to it.
 
 ## Prompt 6: Implementación final
-Lee los archivos @specs/mission.md y @specs/tech-stack para ver los detalles del proyecto
-Implementa cada tarea del @specs/2026-11-06-esquema-inicial/plan.md una a la vez.
+
+### Spanish
+Lee los archivos @specs/mission.md, @specs/tech-stack para ver los detalles del proyecto y el archivo @specs/roadmap.md para las fases del proyecto.
+
+Implementa el grupo de tareas del @specs/2026-11-06-esquema-inicial/plan.md una a la vez.
 
 No arregles nada después del subagente. Haz una revisión y proporciona una lista de errores críticos. 
+
+### English
+Look the files @specs/mission.md and @specs/tech-stack for project details, and the file @specs/roadmap.md for project phases.
+
+Implement the task group from @specs/2026-11-06-initial-schema/plan.md one task at a time.
+
+Do not fix anything after the subagent. Perform a review and provide a list of critical errors. 
 
 
 
