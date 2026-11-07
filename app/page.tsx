@@ -7,13 +7,21 @@ import FeaturedProducts from "@/components/FeaturedProducts"
 import HowItWorks from "@/components/HowItWorks"
 import AffiliateDisclosure from "@/components/AffiliateDisclosure"
 import FinalCTA from "@/components/FinalCTA"
+import { parseSearchParams } from "@/lib/search-params"
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ categoria?: string }>
+}) {
+  const params = await searchParams
+  const { categoria: categoriaActiva } = parseSearchParams(params)
+
   return (
     <>
       <Hero />
       <Benefits />
-      <Categories />
+      <Categories categoriaActiva={categoriaActiva} />
       <SearchCourses />
       <Suspense fallback={<section className="h-96 bg-violet-50" aria-hidden="true" />}>
         <FeaturedProducts />

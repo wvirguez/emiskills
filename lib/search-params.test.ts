@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildProductsHref, parseSearchParams } from "@/lib/search-params";
+import { buildProductsHref, buildHomeCategoryHref, parseSearchParams } from "@/lib/search-params";
 
 describe("parseSearchParams", () => {
   it("normaliza valores válidos", () => {
@@ -46,6 +46,17 @@ describe("buildProductsHref", () => {
     expect(buildProductsHref({ q: "a b&c", categoria: "ebook", page: 3 })).toBe(
       "/productos?q=a+b%26c&categoria=ebook&page=3",
     );
+  });
+});
+
+describe("buildHomeCategoryHref", () => {
+  it("sin slug devuelve /#categorias", () => {
+    expect(buildHomeCategoryHref()).toBe("/#categorias");
+    expect(buildHomeCategoryHref(undefined)).toBe("/#categorias");
+  });
+  it("con slug devuelve /?categoria=<slug>#categorias", () => {
+    expect(buildHomeCategoryHref("curso")).toBe("/?categoria=curso#categorias");
+    expect(buildHomeCategoryHref("ebook")).toBe("/?categoria=ebook#categorias");
   });
 });
 

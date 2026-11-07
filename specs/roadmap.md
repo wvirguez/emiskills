@@ -26,7 +26,7 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 - [x] **Fase 13:** Eliminar la sección "Plataformas de origen de los productos" de la landing (`Partners`) y su uso en `app/page.tsx`; retirar el componente y los tests/imports que queden sin uso.
 - [x] **Fase 14:** Botón "Inicio" en la barra de navegación (escritorio y menú móvil) que lleva a la Home Page (`/`).
 - [x] **Fase 15:** Franja horizontal de 4 beneficios con íconos en la landing: "Alta Calidad" (Productos Premium y útiles), "Acceso Instantáneo" (Descarga inmediata después de comprar), "Pago Seguro" (Pagos seguros y encriptados) y "Gran Apoyo" (Estamos aquí para ayudarte en cualquier momento). Revisar con la misión que los textos no prometan algo que los productores no garanticen (la venta ocurre en la plataforma del productor).
-- [ ] **Fase 16:** Sección "Categorías" con scroll horizontal de tarjetas medianas de productos: al hacer clic en una categoría, el scroll muestra solo los productos de esa categoría (por defecto, todos). Reutiliza `getProducts` con `categorySlug`; definir en la entrevista si el cambio es por cliente o por URL.
+- [x] **Fase 16:** Sección "Categorías" con scroll horizontal de tarjetas medianas de productos: al hacer clic en una categoría, el scroll muestra solo los productos de esa categoría (por defecto, todos). Reutiliza `getProducts` con `categorySlug`; definir en la entrevista si el cambio es por cliente o por URL.
 - [ ] **Fase 17:** Pulido responsive/móvil y aviso de divulgación de afiliados.
 
 ## Bloque C — Enlaces de afiliado y clics

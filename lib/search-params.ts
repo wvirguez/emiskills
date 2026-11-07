@@ -92,3 +92,12 @@ export function buildProductsHref(
   const qs = sp.toString();
   return qs ? `/productos?${qs}` : "/productos";
 }
+
+/** Construye el href de la sección Categorías en la home.
+ *  - Sin slug: `/#categorias`
+ *  - Con slug: `/?categoria=<slug>#categorias`
+ */
+export function buildHomeCategoryHref(slug?: string): string {
+  if (!slug) return "/#categorias";
+  return `/?categoria=${slug}#categorias`;
+}
