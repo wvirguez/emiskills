@@ -1,6 +1,8 @@
-type Props = { q?: string; categoria?: string; id?: string };
+import type { ExtraFilters } from "@/lib/search-params";
 
-export default function SearchForm({ q, categoria, id = "q" }: Props) {
+type Props = { q?: string; categoria?: string; id?: string; filters?: ExtraFilters };
+
+export default function SearchForm({ q, categoria, id = "q", filters }: Props) {
   return (
     <form
       role="search"
@@ -21,6 +23,17 @@ export default function SearchForm({ q, categoria, id = "q" }: Props) {
         className="w-full min-w-0 border-0 bg-transparent py-4 pl-5 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none"
       />
       {categoria ? <input type="hidden" name="categoria" value={categoria} /> : null}
+      {filters?.precioMin !== undefined ? (
+        <input type="hidden" name="precioMin" value={filters.precioMin} />
+      ) : null}
+      {filters?.precioMax !== undefined ? (
+        <input type="hidden" name="precioMax" value={filters.precioMax} />
+      ) : null}
+      {filters?.moneda ? <input type="hidden" name="moneda" value={filters.moneda} /> : null}
+      {filters?.idioma ? <input type="hidden" name="idioma" value={filters.idioma} /> : null}
+      {filters?.plataforma ? (
+        <input type="hidden" name="plataforma" value={filters.plataforma} />
+      ) : null}
       <button
         type="submit"
         className="m-1.5 shrink-0 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-2.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg"

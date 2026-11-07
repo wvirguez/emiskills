@@ -27,4 +27,12 @@ describe("Pagination", () => {
     rerender(<Pagination page={2} totalPages={2} />);
     expect(screen.queryByRole("link", { name: /Siguiente/ })).toBeNull();
   });
+
+  it("conserva los filtros de precio, idioma y plataforma", () => {
+    render(<Pagination page={2} totalPages={3} filters={{ precioMax: 20, moneda: "USD", idioma: "es", plataforma: "hotmart" }} />);
+    expect(screen.getByRole("link", { name: /Siguiente/ })).toHaveAttribute(
+      "href",
+      "/productos?precioMax=20&moneda=USD&idioma=es&plataforma=hotmart&page=3",
+    );
+  });
 });

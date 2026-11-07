@@ -27,4 +27,12 @@ describe("CategoryChips", () => {
       "/productos?q=java&categoria=ebook",
     );
   });
+
+  it("conserva los filtros nuevos al cambiar de categoría", () => {
+    render(<CategoryChips categories={cats} filters={{ idioma: "es", precioMin: 5 }} />);
+    expect(screen.getByRole("link", { name: "Ebooks" })).toHaveAttribute(
+      "href",
+      "/productos?categoria=ebook&precioMin=5&idioma=es",
+    );
+  });
 });

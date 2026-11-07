@@ -21,7 +21,7 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 - [x] **Fase 8:** Listado de productos en la landing con datos reales (reemplaza datos de ejemplo).
 - [x] **Fase 9:** Página de detalle de producto (información clara y honesta).
 - [x] **Fase 10:** Buscador: texto + filtro por categoría.
-- [ ] **Fase 11:** Filtros por precio, idioma y plataforma.
+- [x] **Fase 11:** Filtros por precio, idioma y plataforma.
 - [ ] **Fase 12:** CTAs del Hero: cambiar "Obten una Propuesta" por "COMPRAR AHORA" y "Intentalo Ahora!" por "EXPLORAR POR CATEGORÍAS", actualizando también sus enlaces (propuesta inicial: `/productos` y `/#categorias`; confirmar en la entrevista de la fase). Actualizar `Hero.test.tsx`.
 - [ ] **Fase 13:** Eliminar la sección "Plataformas de origen de los productos" de la landing (`Partners`) y su uso en `app/page.tsx`; retirar el componente y los tests/imports que queden sin uso.
 - [ ] **Fase 14:** Botón "Inicio" en la barra de navegación (escritorio y menú móvil) que lleva a la Home Page (`/`).

@@ -7,6 +7,7 @@ const mocks = vi.hoisted(() => ({
   productCount: vi.fn(),
   categoryFindMany: vi.fn(),
   platformFindMany: vi.fn(),
+  productGroupBy: vi.fn(),
 }));
 
 vi.mock("@/lib/db", () => ({
@@ -15,6 +16,7 @@ vi.mock("@/lib/db", () => ({
       findMany: mocks.productFindMany,
       findFirst: mocks.productFindFirst,
       count: mocks.productCount,
+      groupBy: mocks.productGroupBy,
     },
     category: { findMany: mocks.categoryFindMany },
     platform: { findMany: mocks.platformFindMany },
@@ -23,6 +25,7 @@ vi.mock("@/lib/db", () => ({
 
 import {
   getCategories,
+  getFilterOptions,
   getPlatforms,
   getProductBySlug,
   getProducts,
@@ -165,5 +168,53 @@ describe("getCategories / getPlatforms", () => {
     expect(await getPlatforms()).toHaveLength(1);
     expect(mocks.categoryFindMany.mock.calls[0][0].orderBy).toEqual({ name: "asc" });
     expect(mocks.platformFindMany.mock.calls[0][0].orderBy).toEqual({ name: "asc" });
+  });
+});
+
+describe("filtros de precio, moneda, idioma y plataforma", () => {
+  beforeEach(() => {
+    mocks.productFindMany.mockResolvedValue([]);
+    mocks.productCount.mockResolvedValue(0);
+  });
+
+  it("genera cada cláusula y usa el mismo where en findMany y count", async () => {
+    await getProducts({
+      categorySlug: "curso", q: "a", minPrice: 5, maxPrice: 20,
+      currency: "USD", language: "en", platformSlug: "hotmart",
+    });
+    const where = mocks.productFindMany.mock.calls[0][0].where;
+    expect(where).toMatchObject({
+      isActive: true,
+      category: { slug: "curso" },
+      platform: { slug: "hotmart" },
+      currency: "USD",
+      language: "en",
+      price: { gte: 5, lte: 20 },
+    });
+    expect(where.OR).toBeDefined();
+    expect(mocks.productCount.mock.calls[0][0].where).toEqual(where);
+  });
+
+  it("incluye solo los límites de precio presentes (0 es válido)", async () => {
+    await getProducts({ minPrice: 0 });
+    expect(mocks.productFindMany.mock.calls[0][0].where.price).toEqual({ gte: 0 });
+    mocks.productFindMany.mockClear();
+    await getProducts({ maxPrice: 9 });
+    expect(mocks.productFindMany.mock.calls[0][0].where.price).toEqual({ lte: 9 });
+  });
+});
+
+describe("getFilterOptions", () => {
+  it("devuelve monedas por cantidad e idiomas de productos activos", async () => {
+    mocks.productGroupBy
+      .mockResolvedValueOnce([{ currency: "USD" }, { currency: "EUR" }])
+      .mockResolvedValueOnce([{ language: "en" }, { language: "es" }]);
+    expect(await getFilterOptions()).toEqual({
+      currencies: ["USD", "EUR"],
+      languages: ["en", "es"],
+    });
+    const first = mocks.productGroupBy.mock.calls[0][0];
+    expect(first.where).toEqual({ isActive: true });
+    expect(first.orderBy).toEqual({ _count: { currency: "desc" } });
   });
 });

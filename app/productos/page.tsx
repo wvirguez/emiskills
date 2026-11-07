@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { connection } from "next/server";
 import CategoryChips from "@/components/CategoryChips";
 import Pagination from "@/components/Pagination";
+import ProductFilters from "@/components/ProductFilters";
 import SearchForm from "@/components/SearchForm";
 import SearchResults from "@/components/SearchResults";
-import { getCategories, getProducts } from "@/lib/products";
+import { getCategories, getFilterOptions, getPlatforms, getProducts } from "@/lib/products";
 import { parseSearchParams } from "@/lib/search-params";
 
 export const metadata: Metadata = {
@@ -21,14 +22,42 @@ export default async function ProductsPage({ searchParams }: Props) {
   await connection();
   const filters = parseSearchParams(await searchParams);
 
-  const categories = await getCategories();
+  const [categories, platforms, options] = await Promise.all([
+    getCategories(),
+    getPlatforms(),
+    getFilterOptions(),
+  ]);
   const categoria = categories.some((c) => c.slug === filters.categoria)
     ? filters.categoria
     : undefined;
+  const plataforma = platforms.some((p) => p.slug === filters.plataforma)
+    ? filters.plataforma
+    : undefined;
+  const idioma = options.languages.includes(filters.idioma ?? "")
+    ? filters.idioma
+    : undefined;
+  const hasPrice = filters.precioMin !== undefined || filters.precioMax !== undefined;
+  const moneda = options.currencies.includes(filters.moneda ?? "")
+    ? filters.moneda
+    : hasPrice
+      ? options.currencies[0]
+      : undefined;
+  const extra = {
+    precioMin: filters.precioMin,
+    precioMax: filters.precioMax,
+    moneda,
+    idioma,
+    plataforma,
+  };
 
   const result = await getProducts({
     q: filters.q,
     categorySlug: categoria,
+    minPrice: filters.precioMin,
+    maxPrice: filters.precioMax,
+    currency: moneda,
+    language: idioma,
+    platformSlug: plataforma,
     page: filters.page,
   });
 
@@ -40,10 +69,20 @@ export default async function ProductsPage({ searchParams }: Props) {
         </h1>
 
         <div className="mx-auto mt-8 max-w-2xl">
-          <SearchForm q={filters.q} categoria={categoria} />
+          <SearchForm q={filters.q} categoria={categoria} filters={extra} />
         </div>
         <div className="mt-6 mb-10">
-          <CategoryChips categories={categories} activeSlug={categoria} q={filters.q} />
+          <CategoryChips categories={categories} activeSlug={categoria} q={filters.q} filters={extra} />
+        </div>
+
+        <div className="mb-8">
+          <ProductFilters
+            q={filters.q}
+            categoria={categoria}
+            filters={extra}
+            platforms={platforms}
+            options={options}
+          />
         </div>
 
         <SearchResults result={result} />
@@ -52,6 +91,7 @@ export default async function ProductsPage({ searchParams }: Props) {
           totalPages={result.totalPages}
           q={filters.q}
           categoria={categoria}
+          filters={extra}
         />
       </div>
     </section>

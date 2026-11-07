@@ -41,7 +41,16 @@ export type GetProductsParams = {
   q?: string;
   /** Slug de categoría. */
   categorySlug?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  /** Código ISO de moneda (ej. "USD"). */
+  currency?: string;
+  /** Código de idioma de 2 letras. */
+  language?: string;
+  platformSlug?: string;
 };
+
+export type FilterOptions = { currencies: string[]; languages: string[] };
 
 const pageSchema = z.number().int().min(1).catch(1);
 const pageSizeSchema = z
@@ -104,6 +113,19 @@ export async function getProducts(
     ...(params.categorySlug
       ? { category: { slug: params.categorySlug } }
       : {}),
+    ...(params.platformSlug
+      ? { platform: { slug: params.platformSlug } }
+      : {}),
+    ...(params.currency ? { currency: params.currency } : {}),
+    ...(params.language ? { language: params.language } : {}),
+    ...(params.minPrice !== undefined || params.maxPrice !== undefined
+      ? {
+          price: {
+            ...(params.minPrice !== undefined ? { gte: params.minPrice } : {}),
+            ...(params.maxPrice !== undefined ? { lte: params.maxPrice } : {}),
+          },
+        }
+      : {}),
     ...(q
       ? {
           OR: [
@@ -159,4 +181,25 @@ export async function getPlatforms(): Promise<PlatformDTO[]> {
     select: { id: true, slug: true, name: true },
     orderBy: { name: "asc" },
   });
+}
+
+/** Monedas (más comunes primero) e idiomas presentes en productos activos. */
+export async function getFilterOptions(): Promise<FilterOptions> {
+  const [currencies, languages] = await Promise.all([
+    db.product.groupBy({
+      by: ["currency"],
+      where: { isActive: true },
+      _count: { _all: true },
+      orderBy: { _count: { currency: "desc" } },
+    }),
+    db.product.groupBy({
+      by: ["language"],
+      where: { isActive: true },
+      orderBy: { language: "asc" },
+    }),
+  ]);
+  return {
+    currencies: currencies.map((c) => c.currency),
+    languages: languages.map((l) => l.language),
+  };
 }

@@ -48,3 +48,45 @@ describe("buildProductsHref", () => {
     );
   });
 });
+
+describe("filtros de precio, moneda, idioma y plataforma", () => {
+  it("parsea valores válidos", () => {
+    expect(
+      parseSearchParams({
+        precioMin: "10", precioMax: "50.5", moneda: "USD", idioma: "en", plataforma: "hotmart",
+      }),
+    ).toMatchObject({
+      precioMin: 10, precioMax: 50.5, moneda: "USD", idioma: "en", plataforma: "hotmart",
+    });
+  });
+
+  it("descarta precios inválidos y formatos incorrectos", () => {
+    const r = parseSearchParams({
+      precioMin: "-1", precioMax: "abc", moneda: "usd", idioma: "ESP", plataforma: "A B",
+    });
+    expect(r.precioMin).toBeUndefined();
+    expect(r.precioMax).toBeUndefined();
+    expect(r.moneda).toBeUndefined();
+    expect(r.idioma).toBeUndefined();
+    expect(r.plataforma).toBeUndefined();
+    expect(parseSearchParams({ precioMin: "1.234" }).precioMin).toBeUndefined();
+  });
+
+  it("ignora precioMax menor que precioMin y toma el primer valor de arrays", () => {
+    const r = parseSearchParams({ precioMin: "50", precioMax: "10", idioma: ["es", "en"] });
+    expect(r.precioMin).toBe(50);
+    expect(r.precioMax).toBeUndefined();
+    expect(r.idioma).toBe("es");
+  });
+
+  it("buildProductsHref conserva todos los filtros", () => {
+    expect(
+      buildProductsHref({
+        q: "a", categoria: "curso", precioMin: 0, precioMax: 20, moneda: "USD",
+        idioma: "es", plataforma: "hotmart", page: 2,
+      }),
+    ).toBe(
+      "/productos?q=a&categoria=curso&precioMin=0&precioMax=20&moneda=USD&idioma=es&plataforma=hotmart&page=2",
+    );
+  });
+});
