@@ -14,6 +14,7 @@
 - Feat: La sección "Categorías" de la portada ahora muestra un carrusel horizontal de tarjetas de producto con botones de desplazamiento; al elegir una categoría (o "Todos") se filtran los productos mediante `?categoria=` en la URL
 - Feat: Pulido responsive para móvil en toda la web y nuevo aviso corto de afiliado (con enlace al aviso completo) en la portada, el catálogo y el detalle de producto
 - Feat: Nueva ruta `/go/[slug]` que redirige al enlace de afiliado del producto activo (redirección temporal, sin indexación y con validación de la URL); si el producto no existe o está inactivo responde 404, y el botón "Ir a la oferta" ahora pasa por esa ruta
+- Feat: Registro de clics: cada redirección exitosa de `/go/[slug]` guarda en la nueva tabla `clicks` el producto, la página de origen y la fecha (sin IP ni datos personales); si el registro falla, la redirección continúa igual
 
 ## 2026-11-06
 
