@@ -12,6 +12,8 @@
 - Feat: Franja de 4 beneficios con íconos (Alta Calidad, Acceso Instantáneo, Pago Seguro y Gran Apoyo) justo debajo del Hero en la portada
 - Docs: Nueva habilidad `spec-implemeter` para implementar un plan de especificación grupo por grupo y entregar una revisión con los errores críticos
 - Feat: La sección "Categorías" de la portada ahora muestra un carrusel horizontal de tarjetas de producto con botones de desplazamiento; al elegir una categoría (o "Todos") se filtran los productos mediante `?categoria=` en la URL
+- Feat: Pulido responsive para móvil en toda la web y nuevo aviso corto de afiliado (con enlace al aviso completo) en la portada, el catálogo y el detalle de producto
+- Feat: Nueva ruta `/go/[slug]` que redirige al enlace de afiliado del producto activo (redirección temporal, sin indexación y con validación de la URL); si el producto no existe o está inactivo responde 404, y el botón "Ir a la oferta" ahora pasa por esa ruta
 
 ## 2026-11-06
 
