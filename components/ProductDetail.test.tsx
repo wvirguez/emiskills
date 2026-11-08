@@ -42,9 +42,12 @@ describe("ProductDetail", () => {
 
   it("el botón apunta a /go/<slug> y hay aviso de afiliado", () => {
     render(<ProductDetail product={base} />);
-    expect(screen.getByRole("link", { name: "Ir a la oferta" })).toHaveAttribute(
-      "href",
-      "/go/curso-java",
+    const cta = screen.getByRole("link", { name: "Ir a la oferta" });
+    expect(cta).toHaveAttribute("href", "/go/curso-java");
+    expect(cta).toHaveAttribute("target", "_blank");
+    expect(cta).toHaveAttribute(
+      "rel",
+      "sponsored nofollow noopener noreferrer",
     );
     expect(screen.getByText(/Aviso de afiliado/)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Volver al catálogo/ })).toBeInTheDocument();

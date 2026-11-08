@@ -56,7 +56,8 @@ export default function ProductDetail({ product }: { product: ProductDTO }) {
               </p>
               <Link
                 href={`/go/${product.slug}`}
-                rel="sponsored nofollow"
+                target="_blank"
+                rel="sponsored nofollow noopener noreferrer"
                 className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-violet-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-violet-700 sm:w-auto"
               >
                 Ir a la oferta

@@ -169,6 +169,17 @@ export async function getProductBySlug(
   return row ? toProductDTO(row) : null;
 }
 
+export async function getAffiliateUrlBySlug(slug: string): Promise<string | null> {
+  const parsed = z.string().min(1).max(150).safeParse(slug);
+  if (!parsed.success) return null;
+
+  const row = await db.product.findFirst({
+    where: { slug: parsed.data, isActive: true },
+    select: { affiliateUrl: true },
+  });
+  return row?.affiliateUrl ?? null;
+}
+
 export async function getCategories(): Promise<CategoryDTO[]> {
   return db.category.findMany({
     select: { id: true, slug: true, name: true },
