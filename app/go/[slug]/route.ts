@@ -1,18 +1,19 @@
 import { NextResponse } from "next/server";
-import { getAffiliateUrlBySlug } from "@/lib/products";
+import { getAffiliateTargetBySlug } from "@/lib/products";
+import { recordClick } from "@/lib/clicks";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ slug: string }> },
 ): Promise<Response> {
   const { slug } = await params;
 
   try {
-    const affiliateUrl = await getAffiliateUrlBySlug(slug);
+    const target = await getAffiliateTargetBySlug(slug);
 
-    if (!affiliateUrl) {
+    if (!target) {
       return new Response("Producto no disponible", {
         status: 404,
         headers: {
@@ -23,7 +24,7 @@ export async function GET(
 
     let parsedUrl: URL;
     try {
-      parsedUrl = new URL(affiliateUrl);
+      parsedUrl = new URL(target.affiliateUrl);
     } catch {
       return new Response("Producto no disponible", {
         status: 404,
@@ -40,6 +41,15 @@ export async function GET(
           "X-Robots-Tag": "noindex",
         },
       });
+    }
+
+    try {
+      await recordClick({
+        productId: target.id,
+        referer: request.headers.get("referer"),
+      });
+    } catch {
+      console.error("[go] No se pudo registrar el clic", { slug });
     }
 
     const redirectResponse = NextResponse.redirect(parsedUrl.toString(), 307);

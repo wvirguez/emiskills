@@ -48,9 +48,23 @@ model Product {
 
   category  Category  @relation(fields: [categoryId], references: [id])
   platform  Platform  @relation(fields: [platformId], references: [id])
+  clicks    Click[]
 
   @@index([categoryId])
   @@index([platformId])
   @@index([isActive])
   @@map("products")
+}
+
+model Click {
+  id        Int       @id @default(autoincrement())
+  productId Int
+  referer   String?   @db.VarChar(500)
+  createdAt DateTime  @default(now())
+
+  product   Product   @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@index([createdAt])
+  @@map("clicks")
 }

@@ -30,8 +30,8 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 - [x] **Fase 17:** Pulido responsive/móvil y aviso de divulgación de afiliados.
 
 ## Bloque C — Enlaces de afiliado y clics
-- [ ] **Fase 18:** Ruta `/go/[slug]` que redirige al enlace de afiliado parametrizado.
-- [ ] **Fase 19:** Registro de clics (tabla `Click`) en cada redirección.
+- [x] **Fase 18:** Ruta `/go/[slug]` que redirige al enlace de afiliado parametrizado.
+- [x] **Fase 19:** Registro de clics (tabla `Click`) en cada redirección.
 
 ## Bloque D — Panel de administración
 - [ ] **Fase 20:** Autenticación del admin y protección de rutas `/admin`.

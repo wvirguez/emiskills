@@ -24,6 +24,7 @@ vi.mock("@/lib/db", () => ({
 }));
 
 import {
+  getAffiliateTargetBySlug,
   getAffiliateUrlBySlug,
   getCategories,
   getFilterOptions,
@@ -190,6 +191,39 @@ describe("getAffiliateUrlBySlug", () => {
   it("devuelve null con slug >150 caracteres sin consultar", async () => {
     const longSlug = "a".repeat(151);
     expect(await getAffiliateUrlBySlug(longSlug)).toBeNull();
+    expect(mocks.productFindFirst).not.toHaveBeenCalled();
+  });
+});
+
+describe("getAffiliateTargetBySlug", () => {
+  it("devuelve id y affiliateUrl del producto activo", async () => {
+    mocks.productFindFirst.mockResolvedValue({ id: 42, affiliateUrl: "https://afiliado.com/curso-a" });
+    const res = await getAffiliateTargetBySlug("curso-a");
+    expect(res).toEqual({ id: 42, affiliateUrl: "https://afiliado.com/curso-a" });
+    expect(mocks.productFindFirst.mock.calls[0][0]).toEqual({
+      where: { slug: "curso-a", isActive: true },
+      select: { id: true, affiliateUrl: true },
+    });
+  });
+
+  it("devuelve null si el producto no existe", async () => {
+    mocks.productFindFirst.mockResolvedValue(null);
+    expect(await getAffiliateTargetBySlug("nada")).toBeNull();
+  });
+
+  it("devuelve null si el producto está inactivo", async () => {
+    mocks.productFindFirst.mockResolvedValue(null);
+    expect(await getAffiliateTargetBySlug("inactivo")).toBeNull();
+  });
+
+  it("devuelve null con slug vacío sin consultar", async () => {
+    expect(await getAffiliateTargetBySlug("")).toBeNull();
+    expect(mocks.productFindFirst).not.toHaveBeenCalled();
+  });
+
+  it("devuelve null con slug >150 caracteres sin consultar", async () => {
+    const longSlug = "a".repeat(151);
+    expect(await getAffiliateTargetBySlug(longSlug)).toBeNull();
     expect(mocks.productFindFirst).not.toHaveBeenCalled();
   });
 });

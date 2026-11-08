@@ -180,6 +180,17 @@ export async function getAffiliateUrlBySlug(slug: string): Promise<string | null
   return row?.affiliateUrl ?? null;
 }
 
+export async function getAffiliateTargetBySlug(slug: string): Promise<{ id: number; affiliateUrl: string } | null> {
+  const parsed = z.string().min(1).max(150).safeParse(slug);
+  if (!parsed.success) return null;
+
+  const row = await db.product.findFirst({
+    where: { slug: parsed.data, isActive: true },
+    select: { id: true, affiliateUrl: true },
+  });
+  return row ? { id: row.id, affiliateUrl: row.affiliateUrl } : null;
+}
+
 export async function getCategories(): Promise<CategoryDTO[]> {
   return db.category.findMany({
     select: { id: true, slug: true, name: true },
