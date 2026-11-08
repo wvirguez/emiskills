@@ -17,7 +17,7 @@ export default function HowItWorks() {
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 Explora el catálogo
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-base text-gray-600">
                 Navega por categorías y productos de forma honesta y transparente.
               </p>
             </div>
@@ -30,7 +30,7 @@ export default function HowItWorks() {
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 Elige tu producto
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-base text-gray-600">
                 Revisa descripciones, precios y plataformas de origen sin presiones.
               </p>
             </div>
@@ -43,7 +43,7 @@ export default function HowItWorks() {
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
                 Accede a la plataforma
               </h3>
-              <p className="text-sm text-gray-600">
+              <p className="text-base text-gray-600">
                 Es redirigido al sitio del productor con tu enlace de afiliado transparente.
               </p>
             </div>

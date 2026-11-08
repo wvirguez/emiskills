@@ -23,7 +23,7 @@ export default function Navbar() {
         {/* Mobile menu button — left side */}
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-violet-50 hover:text-violet-600 md:hidden"
+          className="inline-flex items-center justify-center rounded-md p-3 text-gray-700 hover:bg-violet-50 hover:text-violet-600 md:hidden min-h-[44px] min-w-[44px]"
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen}
           aria-label="Toggle navigation"
@@ -84,7 +84,7 @@ export default function Navbar() {
         <div className="hidden md:flex md:items-center md:gap-4 md:ml-8">
           <Link
             href="/productos"
-            className="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-5 py-2 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:scale-105 active:scale-100"
+            className="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:scale-105 active:scale-100 min-h-[44px] flex items-center"
           >
             Ver productos
           </Link>
@@ -103,7 +103,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               aria-current={isActive(link.href) ? "page" : undefined}
-              className={`block rounded-lg px-3 py-2.5 text-base font-medium transition-colors hover:bg-violet-50 hover:text-violet-600 ${
+              className={`block rounded-lg px-3 py-3 text-base font-medium transition-colors hover:bg-violet-50 hover:text-violet-600 min-h-[44px] flex items-center ${
                 isActive(link.href) ? "text-violet-600" : "text-gray-700"
               }`}
               onClick={() => setIsOpen(false)}
@@ -114,7 +114,7 @@ export default function Navbar() {
           <div className="pt-2">
             <Link
               href="/productos"
-              className="block w-full rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-5 py-2.5 text-center text-sm font-semibold text-white shadow-md"
+              className="block w-full rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-5 py-3 text-center text-base font-semibold text-white shadow-md min-h-[44px] flex items-center justify-center"
               onClick={() => setIsOpen(false)}
             >
               Ver productos

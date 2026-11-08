@@ -28,7 +28,7 @@ export default function FinalCTA() {
             <div className="mt-10">
               <Link
                 href="/productos"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 active:scale-100"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-8 py-4 text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 active:scale-100 min-h-[48px] min-w-[48px]"
               >
                 Ver productos
                 <svg
@@ -95,7 +95,7 @@ export default function FinalCTA() {
                 </div>
                 <div>
                   <p className="text-lg font-bold text-gray-900">Catálogo variado</p>
-                  <p className="text-xs text-gray-500">Productos digitales</p>
+                  <p className="text-sm text-gray-500">Productos digitales</p>
                 </div>
               </div>
             </div>

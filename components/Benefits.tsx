@@ -18,7 +18,7 @@ export default function Benefits() {
   return (
     <section aria-label="Beneficios" className="bg-white py-10 sm:py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {BENEFITS.map(({ title, description, Icon }) => (
             <li
               key={title}

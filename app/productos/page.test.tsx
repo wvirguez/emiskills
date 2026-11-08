@@ -85,4 +85,15 @@ describe("/productos", () => {
     );
     expect(screen.getByLabelText("Moneda")).toHaveValue("USD");
   });
+
+  it("muestra el aviso corto de afiliado", async () => {
+    await run({});
+    expect(screen.getByText(/Aviso de afiliado/)).toBeInTheDocument();
+    expect(screen.getByText(/comisión/i)).toBeInTheDocument();
+    expect(screen.getByText(/sin costo extra/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Más información/ })).toHaveAttribute(
+      "href",
+      "/#aviso-afiliados",
+    );
+  });
 });

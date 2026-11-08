@@ -9,7 +9,7 @@ export default function ProductCard({ product }: { product: ProductDTO }) {
         className={`relative h-48 overflow-hidden bg-gradient-to-br ${product.imageGradient ?? DEFAULT_GRADIENT}`}
       >
         <div className="absolute top-4 right-4">
-          <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-violet-700 backdrop-blur-sm">
+          <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-sm font-semibold text-violet-700 backdrop-blur-sm">
             {product.category.name}
           </span>
         </div>
@@ -20,10 +20,10 @@ export default function ProductCard({ product }: { product: ProductDTO }) {
         <h3 className="text-lg font-bold text-gray-900 transition-colors group-hover:text-violet-600">
           {product.title}
         </h3>
-        <p className="mt-2 line-clamp-2 text-sm text-gray-600">
+        <p className="mt-2 line-clamp-2 text-base text-gray-600">
           {product.shortDescription}
         </p>
-        <p className="mt-3 text-sm text-gray-500">
+        <p className="mt-3 text-base text-gray-500">
           Plataforma:{" "}
           <span className="text-violet-600">{product.platform.name}</span>
         </p>
@@ -31,11 +31,11 @@ export default function ProductCard({ product }: { product: ProductDTO }) {
         <div className="mt-auto flex items-center justify-between pt-6">
           <span className="text-2xl font-bold text-violet-600">
             {product.price.toFixed(2)}{" "}
-            <span className="text-sm font-medium">{product.currency}</span>
+            <span className="text-base font-medium">{product.currency}</span>
           </span>
           <Link
             href={`/productos/${product.slug}`}
-            className="inline-flex items-center gap-1.5 rounded-full bg-violet-50 px-4 py-2 text-sm font-semibold text-violet-700 transition-all hover:scale-105 hover:bg-violet-100"
+            className="inline-flex items-center gap-1.5 rounded-full bg-violet-50 px-4 py-2.5 text-base font-semibold text-violet-700 transition-all hover:scale-105 hover:bg-violet-100 min-h-[44px]"
           >
             Ver producto
             <svg

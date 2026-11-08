@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ProductDTO } from "@/lib/products";
 import { DEFAULT_GRADIENT, formatLanguage, formatPrice } from "@/lib/product-ui";
+import AffiliateNotice from "./AffiliateNotice";
 
 export default function ProductDetail({ product }: { product: ProductDTO }) {
   const paragraphs = (product.description ?? product.shortDescription)
@@ -60,11 +61,10 @@ export default function ProductDetail({ product }: { product: ProductDTO }) {
               >
                 Ir a la oferta
               </Link>
-              <p className="mt-3 text-xs text-gray-500">
-                Aviso de afiliado: si compras en la plataforma del productor,
-                podemos recibir una comisión, sin costo extra para ti. El precio
-                se muestra en la moneda de origen del producto.
-              </p>
+              <div className="mt-3 flex flex-col gap-1">
+                <AffiliateNotice />
+                <p className="text-base text-gray-600">El precio se muestra en la moneda de origen del producto.</p>
+              </div>
             </div>
           </div>
         </article>

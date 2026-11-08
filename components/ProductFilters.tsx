@@ -12,8 +12,8 @@ type Props = {
 };
 
 const field =
-  "w-full rounded-lg border-0 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-500";
-const label = "mb-1 block text-xs font-medium text-gray-600";
+  "w-full rounded-lg border-0 bg-white px-3 py-3 text-base text-gray-900 shadow-sm ring-1 ring-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-500 min-h-[44px]";
+const label = "mb-1 block text-sm font-medium text-gray-600";
 
 export default function ProductFilters({
   q,
@@ -35,7 +35,7 @@ export default function ProductFilters({
       />
       <label
         htmlFor="f-toggle"
-        className="block cursor-pointer text-sm font-semibold text-violet-700 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-violet-500 md:hidden"
+        className="block cursor-pointer text-base font-semibold text-violet-700 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-violet-500 md:hidden min-h-[44px] flex items-center"
       >
         Filtros{active ? " (activos)" : ""}
       </label>
@@ -123,19 +123,19 @@ export default function ProductFilters({
           </select>
         </div>
 
-        <p className="text-xs text-gray-500 sm:col-span-2 lg:col-span-5">
+        <p className="text-sm text-gray-500 sm:col-span-2 lg:col-span-5">
           El rango de precio se aplica en la moneda seleccionada; no convertimos monedas.
         </p>
         <div className="flex items-center gap-4 sm:col-span-2 lg:col-span-5">
           <button
             type="submit"
-            className="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-2.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg"
+            className="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-6 py-3 text-base font-semibold text-white shadow-md transition hover:shadow-lg min-h-[44px]"
           >
             Aplicar filtros
           </button>
           <Link
             href={buildProductsHref({ q, categoria })}
-            className="text-sm font-medium text-violet-700 hover:underline"
+            className="text-base font-medium text-violet-700 hover:underline min-h-[44px] flex items-center"
           >
             Limpiar filtros
           </Link>

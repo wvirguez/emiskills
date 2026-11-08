@@ -9,7 +9,7 @@ type Props = {
   filters?: ExtraFilters;
 };
 
-const base = "rounded-full px-3 py-1.5 text-xs font-medium transition-colors";
+const base = "rounded-full px-4 py-2 text-sm font-medium transition-colors min-h-[44px] flex items-center";
 const idle = "bg-violet-50 text-violet-600 hover:bg-violet-100";
 const active = "bg-violet-600 text-white";
 

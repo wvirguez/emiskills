@@ -42,13 +42,13 @@ export default function ProductCarousel({
   }
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       {/* Botón anterior */}
       <button
         type="button"
         onClick={scrollLeft}
         aria-label="Desplazar a la izquierda"
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg ring-1 ring-gray-200 text-violet-600 transition-all hover:bg-white hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg ring-1 ring-gray-200 text-violet-600 transition-all hover:bg-white hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-violet-500 min-h-[44px] min-w-[44px]"
       >
         <svg
           aria-hidden="true"
@@ -69,7 +69,7 @@ export default function ProductCarousel({
         role="region"
         aria-label={`Productos de ${activeCategoryName}`}
         tabIndex={0}
-        className="flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-4 px-4 scroll-px-4 pr-16 pl-16"
+        className="flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-4 px-4 scroll-px-4 pr-16 pl-16 scrollbar-hide"
       >
         <ul role="list" aria-label={`Productos de ${activeCategoryName}`} className="flex gap-4">
           {products.map((product) => (
@@ -80,7 +80,7 @@ export default function ProductCarousel({
           <li className="shrink-0 snap-start w-64 flex items-center">
             <Link
               href={buildProductsHref({ categoria: validSlug })}
-              className="inline-flex items-center gap-1.5 w-full justify-center rounded-full bg-violet-50 px-4 py-3 text-sm font-semibold text-violet-700 transition-colors hover:bg-violet-100"
+              className="inline-flex items-center gap-1.5 w-full justify-center rounded-full bg-violet-50 px-4 py-3 text-sm font-semibold text-violet-700 transition-colors hover:bg-violet-100 min-h-[44px]"
             >
               <svg
                 aria-hidden="true"
@@ -102,7 +102,7 @@ export default function ProductCarousel({
         type="button"
         onClick={scrollRight}
         aria-label="Desplazar a la derecha"
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg ring-1 ring-gray-200 text-violet-600 transition-all hover:bg-white hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-violet-500"
+        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg ring-1 ring-gray-200 text-violet-600 transition-all hover:bg-white hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-violet-500 min-h-[44px] min-w-[44px]"
       >
         <svg
           aria-hidden="true"

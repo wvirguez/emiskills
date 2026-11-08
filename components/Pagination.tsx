@@ -10,7 +10,7 @@ type Props = {
 };
 
 const linkClass =
-  "rounded-full bg-violet-50 px-4 py-2 text-sm font-semibold text-violet-700 transition-colors hover:bg-violet-100";
+  "rounded-full bg-violet-50 px-4 py-2.5 text-base font-semibold text-violet-700 transition-colors hover:bg-violet-100 min-h-[44px] flex items-center";
 
 export default function Pagination({ page, totalPages, q, categoria, filters }: Props) {
   if (totalPages <= 1) return null;
@@ -26,7 +26,7 @@ export default function Pagination({ page, totalPages, q, categoria, filters }: 
           ← Anterior
         </Link>
       ) : null}
-      <span className="text-sm text-gray-600">
+      <span className="text-base text-gray-600">
         Página {Math.min(page, totalPages)} de {totalPages}
       </span>
       {page < totalPages ? (

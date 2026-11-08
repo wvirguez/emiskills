@@ -5,6 +5,7 @@ import Pagination from "@/components/Pagination";
 import ProductFilters from "@/components/ProductFilters";
 import SearchForm from "@/components/SearchForm";
 import SearchResults from "@/components/SearchResults";
+import AffiliateNotice from "@/components/AffiliateNotice";
 import { getCategories, getFilterOptions, getPlatforms, getProducts } from "@/lib/products";
 import { parseSearchParams } from "@/lib/search-params";
 
@@ -84,6 +85,8 @@ export default async function ProductsPage({ searchParams }: Props) {
             options={options}
           />
         </div>
+
+        <AffiliateNotice />
 
         <SearchResults result={result} />
         <Pagination

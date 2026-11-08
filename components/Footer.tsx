@@ -10,7 +10,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 min-h-[44px]">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-600 to-fuchsia-500">
                 <svg
                   className="h-5 w-5 text-white"
@@ -30,10 +30,10 @@ export default function Footer() {
                 Emi<span className="text-violet-400">Skills</span>
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-gray-400 max-w-xs">
+            <p className="text-base leading-relaxed text-gray-400 max-w-xs">
               Libera tu potencial. Explora, aprende y crece con los mejores productos digitales y cursos en línea.
             </p>
-            <p className="text-sm leading-relaxed text-gray-400 max-w-xs">
+            <p className="text-base leading-relaxed text-gray-400 max-w-xs">
               Reunimos productos de Hotmart y de otros productores.
             </p>
           </div>
@@ -43,24 +43,24 @@ export default function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
               Enlaces rápidos
             </h3>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-3 text-base">
               <li>
-                <Link href="/#productos" className="hover:text-violet-400 transition-colors">
+                <Link href="/#productos" className="hover:text-violet-400 transition-colors min-h-[44px] flex items-center">
                   Productos
                 </Link>
               </li>
               <li>
-                <Link href="/#categorias" className="hover:text-violet-400 transition-colors">
+                <Link href="/#categorias" className="hover:text-violet-400 transition-colors min-h-[44px] flex items-center">
                   Categorías
                 </Link>
               </li>
               <li>
-                <Link href="/#buscar" className="hover:text-violet-400 transition-colors">
+                <Link href="/#buscar" className="hover:text-violet-400 transition-colors min-h-[44px] flex items-center">
                   Buscar
                 </Link>
               </li>
               <li>
-                <Link href="/#como-funciona" className="hover:text-violet-400 transition-colors">
+                <Link href="/#como-funciona" className="hover:text-violet-400 transition-colors min-h-[44px] flex items-center">
                   Cómo funciona
                 </Link>
               </li>
@@ -72,8 +72,8 @@ export default function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
               Aviso de afiliados
             </h3>
-            <p className="text-sm leading-relaxed text-gray-400">
-              <strong>Divulgación:</strong> EmiSkills es un hub de productos digitales que muestra ofertas de varios productores. Cuando haces clic en un producto y te registras o compras en la plataforma del productor, podemos recibir una comisión por referencia. Las comisiones no influyen en el orden ni en la presentación de los productos.
+            <p className="text-base leading-relaxed text-gray-400">
+              EmiSkills es un hub de productos digitales que muestra ofertas de varios productores. Cuando haces clic en un producto y te registras o compras en la plataforma del productor, podemos recibir una comisión por referencia. Las comisiones no influyen en el orden ni en la presentación de los productos.
             </p>
           </div>
 
@@ -89,7 +89,7 @@ export default function Footer() {
               {/* Twitter / X */}
               <a
                 href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition hover:bg-violet-600 hover:text-white"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition hover:bg-violet-600 hover:text-white min-h-[44px] min-w-[44px]"
                 aria-label="Twitter"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@ export default function Footer() {
               {/* LinkedIn */}
               <a
                 href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition hover:bg-violet-600 hover:text-white"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition hover:bg-violet-600 hover:text-white min-h-[44px] min-w-[44px]"
                 aria-label="LinkedIn"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -109,7 +109,7 @@ export default function Footer() {
               {/* Instagram */}
               <a
                 href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition hover:bg-violet-600 hover:text-white"
+                className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-800 text-gray-400 transition hover:bg-violet-600 hover:text-white min-h-[44px] min-w-[44px]"
                 aria-label="Instagram"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -122,10 +122,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 border-t border-gray-800 pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-sm text-gray-500">
+          <p className="text-base text-gray-500">
             © {new Date().getFullYear()} EmiSkills. Todos los Derechos Reservados.
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-base text-gray-500">
             Diseñado con ❤️ para visitantes de todo el Mundo
           </p>
         </div>

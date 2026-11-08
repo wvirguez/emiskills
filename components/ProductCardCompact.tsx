@@ -17,7 +17,7 @@ export default function ProductCardCompact({ product }: ProductCardCompactProps)
       </div>
 
       <div className="flex flex-1 flex-col p-4">
-        <p className="text-xs font-medium text-violet-700">
+        <p className="text-sm font-medium text-violet-700">
           {product.category.name}
         </p>
         <h3 className="mt-1 text-base font-bold text-gray-900 line-clamp-2">
@@ -35,7 +35,7 @@ export default function ProductCardCompact({ product }: ProductCardCompactProps)
           </span>
           <Link
             href={`/productos/${product.slug}`}
-            className="inline-flex items-center gap-1.5 rounded-full bg-violet-50 px-3 py-1.5 text-sm font-semibold text-violet-700 transition-colors hover:bg-violet-100"
+            className="inline-flex items-center gap-1.5 rounded-full bg-violet-50 px-3 py-2 text-sm font-semibold text-violet-700 transition-colors hover:bg-violet-100 min-h-[44px]"
           >
             Ver producto
           </Link>

@@ -51,4 +51,13 @@ describe("Landing", () => {
     const { container } = render(await Home({ searchParams }));
     expect(container.querySelector("#categorias")).toHaveAttribute("data-categoria-activa", "todos");
   });
+
+  it("muestra el aviso corto de afiliado", async () => {
+    render(await Home({ searchParams: mockSearchParams }));
+    expect(screen.getByText(/sin costo extra/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Más información/ })).toHaveAttribute(
+      "href",
+      "/#aviso-afiliados",
+    );
+  });
 });
