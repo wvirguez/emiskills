@@ -28,22 +28,34 @@ describe("PanelPage", () => {
     expect(categoriasCard.querySelector('[class*="rounded-full"]')).not.toBeInTheDocument();
   });
 
-  it("renderiza tarjetas Productos y Métricas con estado 'Próximamente'", async () => {
+  it("renderiza la tarjeta Productos como enlace a /admin/productos", async () => {
     render(await PanelPage());
 
-    expect(screen.getByText("Productos")).toBeInTheDocument();
-    expect(screen.getByText("Métricas")).toBeInTheDocument();
-    const proximamenteLabels = screen.getAllByText("Próximamente");
-    expect(proximamenteLabels).toHaveLength(2);
+    const productosLink = screen.getByRole("link", { name: "Productos Administración de productos digitales" });
+    expect(productosLink).toBeInTheDocument();
+    expect(productosLink).toHaveAttribute("href", "/admin/productos");
   });
 
-  it("tarjetas Productos y Métricas no son enlaces", async () => {
+  it("no muestra estado 'Próximamente' en la tarjeta Productos", async () => {
     render(await PanelPage());
 
-    const productosCard = screen.getByText("Productos").closest("article");
+    const productosCard = screen.getByRole("link", { name: "Productos Administración de productos digitales" });
+    expect(productosCard.querySelector('[class*="rounded-full"]')).not.toBeInTheDocument();
+  });
+
+  it("renderiza tarjeta Métricas con estado 'Próximamente'", async () => {
+    render(await PanelPage());
+
+    expect(screen.getByText("Métricas")).toBeInTheDocument();
+    const proximamenteLabels = screen.getAllByText("Próximamente");
+    expect(proximamenteLabels).toHaveLength(1);
+  });
+
+  it("tarjeta Métricas no es un enlace", async () => {
+    render(await PanelPage());
+
     const metricasCard = screen.getByText("Métricas").closest("article");
 
-    expect(productosCard).not.toHaveAttribute("href");
     expect(metricasCard).not.toHaveAttribute("href");
   });
 

@@ -36,7 +36,7 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 ## Bloque D — Panel de administración
 - [x] **Fase 20:** Autenticación del admin y protección de rutas `/admin`.
 - [x] **Fase 21:** CRUD de categorías.
-- [ ] **Fase 22:** CRUD de productos manuales (otros productores).
+- [x] **Fase 22:** CRUD de productos manuales (otros productores).
 - [ ] **Fase 23:** Métricas de clics en el panel (por producto/categoría).
 
 ## Bloque E — Integración Hotmart
