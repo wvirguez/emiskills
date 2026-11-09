@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-08
+
+- Feat: Autenticación de administrador (Fase 20) — `/admin/login` con Server Action + `useActionState`, rate limit (5 intentos / 15 min), sesión HMAC-SHA256 en cookie `httpOnly`/`sameSite=lax` (8h), proxy optimista (`proxy.ts`), panel `/admin` con `noindex, nofollow` y placeholder para Categorías/Productos/Métricas
+- Feat: Hash de contraseña scrypt (`scripts/hash-password.ts`, `npm run admin:hash`) y variables `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, `SESSION_SECRET` validadas en `lib/env.ts` (separadas del catálogo público)
+- Test: Unitarios para password, session, rate-limit, login action, login form, proxy
+
 ## 2026-11-07
 
 - Feat: Buscador de productos: nueva página `/productos` con búsqueda por texto y filtro por categoría, paginación y mensaje cuando no hay resultados; la portada y la sección de categorías ahora leen las categorías de la base de datos y los enlaces del menú funcionan también fuera de la portada
