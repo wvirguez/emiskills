@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-09
+
+- Feat: CRUD de categorías en panel de administración (Fase 21) — listado con conteo de productos, creación, edición y eliminación con validación de slug único y bloqueo si hay productos asociados; Server Actions (`createCategoryAction`, `updateCategoryAction`, `deleteCategoryAction`) con verificación de sesión, validación Zod, `revalidatePath` y `redirect` con parámetros de resultado; páginas `/admin/categorias`, `/admin/categorias/nueva`, `/admin/categorias/[id]` con formularios, estado vacío, mensajes de éxito/error y navegación (enlaces Panel/Volver); tarjeta "Categorías" en panel principal como enlace activo; tests unitarios (lib/categories, actions) y de componentes (CategoryForm, DeleteCategoryButton, páginas)
+
 ## 2026-11-08
 
 - Feat: Autenticación de administrador (Fase 20) — `/admin/login` con Server Action + `useActionState`, rate limit (5 intentos / 15 min), sesión HMAC-SHA256 en cookie `httpOnly`/`sameSite=lax` (8h), proxy optimista (`proxy.ts`), panel `/admin` con `noindex, nofollow` y placeholder para Categorías/Productos/Métricas

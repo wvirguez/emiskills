@@ -1,13 +1,22 @@
 import { verifySession } from "@/lib/auth/session";
+import Link from "next/link";
+
+interface CardData {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  href?: string;
+  status?: string;
+}
 
 export default async function PanelPage() {
   await verifySession();
 
-  const cards = [
+  const cards: CardData[] = [
     {
       title: "Categorías",
       description: "Gestión de categorías de productos",
-      status: "Próximamente",
+      href: "/admin/categorias",
       icon: (
         <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -44,21 +53,45 @@ export default async function PanelPage() {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {cards.map((card) => (
-          <article
-            key={card.title}
-            className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex-shrink-0">{card.icon}</div>
-              <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                {card.status}
-              </span>
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">{card.title}</h3>
-            <p className="text-sm text-gray-600">{card.description}</p>
-          </article>
-        ))}
+        {cards.map((card) => {
+          if (card.href) {
+            return (
+              <Link
+                key={card.title}
+                href={card.href}
+                className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow hover:border-blue-300 block"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex-shrink-0">{card.icon}</div>
+                  {card.status && (
+                    <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                      {card.status}
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">{card.title}</h3>
+                <p className="text-sm text-gray-600">{card.description}</p>
+              </Link>
+            );
+          }
+          return (
+            <article
+              key={card.title}
+              className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex-shrink-0">{card.icon}</div>
+                {card.status && (
+                  <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                    {card.status}
+                  </span>
+                )}
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-1">{card.title}</h3>
+              <p className="text-sm text-gray-600">{card.description}</p>
+            </article>
+          );
+        })}
       </div>
     </div>
   );
