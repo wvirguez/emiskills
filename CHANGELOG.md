@@ -3,6 +3,7 @@
 ## 2026-11-09
 
 - Feat: CRUD de categorías en panel de administración (Fase 21) — listado con conteo de productos, creación, edición y eliminación con validación de slug único y bloqueo si hay productos asociados; Server Actions (`createCategoryAction`, `updateCategoryAction`, `deleteCategoryAction`) con verificación de sesión, validación Zod, `revalidatePath` y `redirect` con parámetros de resultado; páginas `/admin/categorias`, `/admin/categorias/nueva`, `/admin/categorias/[id]` con formularios, estado vacío, mensajes de éxito/error y navegación (enlaces Panel/Volver); tarjeta "Categorías" en panel principal como enlace activo; tests unitarios (lib/categories, actions) y de componentes (CategoryForm, DeleteCategoryButton, páginas)
+- Feat: CRUD de productos manuales en el panel de administración (Fase 22) — listado con categoría, plataforma, precio, estado y clics; creación, edición, activar/desactivar y eliminación (bloqueada si el producto tiene clics registrados); slug generado del título e inmutable, validación Zod (precio, monedas, idiomas, degradados predefinidos, URLs solo `https`), verificación de sesión en cada acción y refresco de las páginas públicas; páginas `/admin/productos`, `/admin/productos/nuevo` y `/admin/productos/[id]`; tarjeta "Productos" del panel activa; tests de capa de datos, acciones, esquema, formulario, botones y páginas
 
 ## 2026-11-08
 
