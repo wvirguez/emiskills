@@ -115,3 +115,31 @@ export function getHotmartEnv(): HotmartEnv {
   hotmartCached ??= parseHotmartEnv(process.env);
   return hotmartCached;
 }
+
+/** Esquema del token del webhook de Hotmart (hottok); independiente de las credenciales de la API. */
+const hotmartWebhookEnvSchema = z.object({
+  HOTMART_HOTTOK: z
+    .string({ error: "HOTMART_HOTTOK es obligatoria" })
+    .min(1, "HOTMART_HOTTOK no puede estar vacía"),
+});
+
+export type HotmartWebhookEnv = z.infer<typeof hotmartWebhookEnvSchema>;
+
+/** Valida el hottok del webhook; los mensajes nunca incluyen el valor. */
+export function parseHotmartWebhookEnv(
+  source: Record<string, string | undefined>
+): HotmartWebhookEnv {
+  const result = hotmartWebhookEnvSchema.safeParse(source);
+  if (!result.success) {
+    const details = result.error.issues
+      .map((issue) => `- ${issue.path.join(".")}: ${issue.message}`)
+      .join("\n");
+    throw new Error(`Variables de entorno del webhook de Hotmart inválidas:\n${details}`);
+  }
+  return result.data;
+}
+
+/** Hottok validado (lazy, sin caché para reflejar cambios de entorno): solo falla al usar el webhook. */
+export function getHotmartWebhookEnv(): HotmartWebhookEnv {
+  return parseHotmartWebhookEnv(process.env);
+}

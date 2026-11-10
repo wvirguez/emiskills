@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseEnv, parseAdminEnv, parseHotmartEnv } from "@/lib/env";
+import { parseEnv, parseAdminEnv, parseHotmartEnv, parseHotmartWebhookEnv } from "@/lib/env";
 
 describe("parseEnv", () => {
   it("acepta una DATABASE_URL de MySQL válida", () => {
@@ -115,5 +115,19 @@ describe("parseHotmartEnv", () => {
       expect(msg).not.toContain("secreto-xyz");
       expect(msg).not.toContain("id-123");
     }
+  });
+});
+
+describe("parseHotmartWebhookEnv", () => {
+  it("acepta un hottok válido", () => {
+    expect(parseHotmartWebhookEnv({ HOTMART_HOTTOK: "tok-123" }).HOTMART_HOTTOK).toBe("tok-123");
+  });
+
+  it("falla si falta", () => {
+    expect(() => parseHotmartWebhookEnv({})).toThrow(/HOTMART_HOTTOK/);
+  });
+
+  it("falla si está vacía sin exponer valores", () => {
+    expect(() => parseHotmartWebhookEnv({ HOTMART_HOTTOK: "" })).toThrow(/vacía/);
   });
 });
