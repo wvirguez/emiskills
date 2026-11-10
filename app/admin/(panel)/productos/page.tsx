@@ -5,6 +5,9 @@ import { getOkMessage, getErrorMessage } from "./messages";
 import { toggleProductActiveByIdAction, deleteProductByIdAction } from "./actions-bound";
 import DeleteProductButton from "./delete-product-button";
 import ToggleActiveButton from "./toggle-active-button";
+import SyncHotmartButton from "./sync-hotmart-button";
+import ProductBadges from "./product-badges";
+import { syncHotmartAction } from "./sync-action";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -54,15 +57,18 @@ export default async function ProductosPage({
             <p className="mt-1 text-sm text-gray-600">Gestiona los productos manuales.</p>
           </div>
         </div>
-        <Link
-          href="/admin/productos/nuevo"
-          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors self-start"
-        >
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Nuevo producto
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-3 self-start">
+          <SyncHotmartButton action={syncHotmartAction} />
+          <Link
+            href="/admin/productos/nuevo"
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors self-start"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Nuevo producto
+          </Link>
+        </div>
       </div>
 
       {okMessage && (
@@ -146,6 +152,7 @@ export default async function ProductosPage({
                         >
                           {product.title}
                         </Link>
+                        <ProductBadges isHotmart={product.isHotmart} needsReview={product.needsReview} />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {product.category.name}
@@ -161,6 +168,7 @@ export default async function ProductosPage({
                           action={toggleProductActiveByIdAction}
                           isActive={product.isActive}
                           productId={product.id}
+                          needsReview={product.needsReview}
                         />
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 font-mono">
@@ -192,6 +200,7 @@ export default async function ProductosPage({
                     className="text-blue-600 hover:text-blue-900 font-medium text-lg flex-1 pr-4"
                   >
                     {product.title}
+                    <ProductBadges isHotmart={product.isHotmart} needsReview={product.needsReview} />
                   </Link>
                   <span className="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded shrink-0">
                     {product.slug}
@@ -211,6 +220,7 @@ export default async function ProductosPage({
                       action={toggleProductActiveByIdAction}
                       isActive={product.isActive}
                       productId={product.id}
+                      needsReview={product.needsReview}
                     />
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                       product.isActive

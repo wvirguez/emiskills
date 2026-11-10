@@ -26,7 +26,7 @@ export async function toggleProductActiveByIdAction(
     if (result.error === "not-found") {
       redirect("/admin/productos?ok=eliminado");
     }
-    redirect("/admin/productos?error=has-clicks&count=0");
+    redirect("/admin/productos?error=needs-review");
   }
 
   revalidatePath("/");

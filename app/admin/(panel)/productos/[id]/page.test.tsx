@@ -114,6 +114,8 @@ describe("EditarProductoPage", () => {
       platformId: 1,
       clickCount: 5,
       createdAt: new Date(),
+      needsReview: false,
+      externalId: null,
       updatedAt: new Date(),
     });
     vi.mocked(getCategories).mockResolvedValue([{ id: 1, slug: "cursos", name: "Cursos" }]);
@@ -128,6 +130,27 @@ describe("EditarProductoPage", () => {
     expect(screen.getByText("Modifica los datos del producto.")).toBeInTheDocument();
     expect(screen.getByLabelText("Título *")).toHaveValue("Curso de React");
     expect(screen.getByRole("button", { name: "Guardar cambios" })).toBeInTheDocument();
+  });
+
+  it.each([
+    [true, true],
+    [false, false],
+  ])("needsReview=%s → aviso de enlace de Hotmart visible=%s", async (needsReview, visible) => {
+    vi.mocked(getProductForAdmin).mockResolvedValue({
+      id: 1, slug: "h", title: "Producto Hotmart", shortDescription: "x", description: null,
+      price: 10, currency: "BRL", language: "es", imageUrl: null,
+      imageGradient: "from-violet-500 to-fuchsia-500", affiliateUrl: "https://pay.hotmart.com/X",
+      isActive: false, categoryId: 1, platformId: 1, clickCount: 0,
+      createdAt: new Date(), needsReview, externalId: "1", updatedAt: new Date(),
+    });
+    vi.mocked(getCategories).mockResolvedValue([{ id: 1, slug: "cursos", name: "Cursos" }]);
+    vi.mocked(listPlatforms).mockResolvedValue([{ id: 1, slug: "hotmart", name: "Hotmart" }]);
+
+    render(await EditarProductoPage({ params: Promise.resolve({ id: "1" }) }));
+
+    const note = screen.queryByRole("note");
+    if (visible) expect(note).toHaveTextContent("no de afiliado");
+    else expect(note).not.toBeInTheDocument();
   });
 
   it("tiene enlace para volver a productos", async () => {
@@ -148,6 +171,8 @@ describe("EditarProductoPage", () => {
       platformId: 1,
       clickCount: 5,
       createdAt: new Date(),
+      needsReview: false,
+      externalId: null,
       updatedAt: new Date(),
     });
     vi.mocked(getCategories).mockResolvedValue([{ id: 1, slug: "cursos", name: "Cursos" }]);
@@ -179,6 +204,8 @@ describe("EditarProductoPage", () => {
       platformId: 1,
       clickCount: 5,
       createdAt: new Date(),
+      needsReview: false,
+      externalId: null,
       updatedAt: new Date(),
     });
     vi.mocked(getCategories).mockResolvedValue([{ id: 1, slug: "cursos", name: "Cursos" }]);
@@ -210,6 +237,8 @@ describe("EditarProductoPage", () => {
       platformId: 1,
       clickCount: 5,
       createdAt: new Date(),
+      needsReview: false,
+      externalId: null,
       updatedAt: new Date(),
     });
     vi.mocked(getCategories).mockResolvedValue([{ id: 1, slug: "cursos", name: "Cursos" }]);
@@ -241,6 +270,8 @@ describe("EditarProductoPage", () => {
       platformId: 1,
       clickCount: 5,
       createdAt: new Date(),
+      needsReview: false,
+      externalId: null,
       updatedAt: new Date(),
     });
     vi.mocked(getCategories).mockResolvedValue([{ id: 1, slug: "cursos", name: "Cursos" }]);
@@ -273,6 +304,8 @@ describe("EditarProductoPage", () => {
       platformId: 1,
       clickCount: 5,
       createdAt: new Date(),
+      needsReview: false,
+      externalId: null,
       updatedAt: new Date(),
     });
     vi.mocked(getCategories).mockResolvedValue([{ id: 1, slug: "cursos", name: "Cursos" }]);

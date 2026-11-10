@@ -16,6 +16,8 @@ export type AdminProductListItem = {
   price: string;
   isActive: boolean;
   clickCount: number;
+  isHotmart: boolean;
+  needsReview: boolean;
 };
 
 export type AdminProductDetail = {
@@ -34,6 +36,8 @@ export type AdminProductDetail = {
   categoryId: number;
   platformId: number;
   clickCount: number;
+  needsReview: boolean;
+  externalId: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -73,11 +77,11 @@ export type CreateProductResult =
 
 export type UpdateProductResult =
   | { ok: true; product: AdminProductDetail }
-  | { ok: false; error: "not-found" | "invalid-category" | "invalid-platform" | "invalid-currency" | "invalid-language" | "invalid-gradient" };
+  | { ok: false; error: "not-found" | "needs-review" | "invalid-category" | "invalid-platform" | "invalid-currency" | "invalid-language" | "invalid-gradient" };
 
 export type SetProductActiveResult =
   | { ok: true; isActive: boolean }
-  | { ok: false; error: "not-found" };
+  | { ok: false; error: "not-found" | "needs-review" };
 
 export type DeleteProductResult =
   | { ok: true }
@@ -97,6 +101,8 @@ const adminProductSelect = {
   imageGradient: true,
   affiliateUrl: true,
   isActive: true,
+  needsReview: true,
+  externalId: true,
   categoryId: true,
   platformId: true,
   _count: { select: { clicks: true } },
@@ -119,6 +125,8 @@ type AdminProductRow = {
   imageGradient: string | null;
   affiliateUrl: string;
   isActive: boolean;
+  needsReview: boolean;
+  externalId: string | null;
   categoryId: number;
   platformId: number;
   _count: { clicks: number };
@@ -138,6 +146,8 @@ function toAdminProductListItem(row: AdminProductRow): AdminProductListItem {
     price: row.price.toString(),
     isActive: row.isActive,
     clickCount: row._count.clicks,
+    isHotmart: row.externalId !== null,
+    needsReview: row.needsReview,
   };
 }
 
@@ -158,6 +168,8 @@ function toAdminProductDetail(row: AdminProductRow): AdminProductDetail {
     categoryId: row.categoryId,
     platformId: row.platformId,
     clickCount: row._count.clicks,
+    needsReview: row.needsReview,
+    externalId: row.externalId,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
   };
@@ -302,7 +314,24 @@ export async function updateProduct(id: number, input: UpdateProductInput): Prom
     return { ok: false, error: "invalid-gradient" };
   }
 
+  // Productos sincronizados de Hotmart: el enlace de oferta no es de afiliado.
+  // Guardar un enlace distinto lo libera; no se puede activar antes de eso.
+  let clearNeedsReview = false;
+  if (input.affiliateUrl !== undefined || input.isActive === true) {
+    const current = await db.product.findUnique({
+      where: { id },
+      select: { affiliateUrl: true, needsReview: true },
+    });
+    if (!current) return { ok: false, error: "not-found" };
+    clearNeedsReview =
+      current.needsReview && input.affiliateUrl !== undefined && input.affiliateUrl !== current.affiliateUrl;
+    if (input.isActive === true && current.needsReview && !clearNeedsReview) {
+      return { ok: false, error: "needs-review" };
+    }
+  }
+
   const data: Prisma.ProductUpdateInput = {};
+  if (clearNeedsReview) data.needsReview = false;
   if (input.title !== undefined) data.title = input.title.trim();
   if (input.shortDescription !== undefined) data.shortDescription = input.shortDescription.trim();
   if (input.description !== undefined) data.description = input.description;
@@ -341,7 +370,7 @@ export async function updateProduct(id: number, input: UpdateProductInput): Prom
   }
 }
 
-/** Activa o desactiva un producto. */
+/** Activa o desactiva un producto. No activa productos de Hotmart pendientes de revisar el enlace. */
 export async function setProductActive(id: number, isActive: boolean): Promise<SetProductActiveResult> {
   if (!Number.isInteger(id) || id <= 0) {
     return { ok: false, error: "not-found" };
@@ -349,13 +378,18 @@ export async function setProductActive(id: number, isActive: boolean): Promise<S
 
   try {
     await db.product.update({
-      where: { id },
+      where: isActive ? { id, needsReview: false } : { id },
       data: { isActive },
       select: { id: true },
     });
     return { ok: true, isActive };
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2025") {
+      if (isActive) {
+        // ¿No existe, o existe pero está pendiente de revisión?
+        const row = await db.product.findUnique({ where: { id }, select: { needsReview: true } });
+        if (row?.needsReview) return { ok: false, error: "needs-review" };
+      }
       return { ok: false, error: "not-found" };
     }
     throw e;

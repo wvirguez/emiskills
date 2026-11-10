@@ -160,6 +160,9 @@ export async function updateProductAction(
     if (result.error === "invalid-platform") {
       return { fieldErrors: { platformId: ["La plataforma seleccionada no existe."] } };
     }
+    if (result.error === "needs-review") {
+      return { error: "Este producto viene de Hotmart: guarda tu enlace de afiliado antes de activarlo." };
+    }
     return { error: "Error al actualizar el producto. Inténtalo de nuevo." };
   }
 
@@ -191,7 +194,9 @@ export async function toggleProductActiveAction(
     if (result.error === "not-found") {
       redirect("/admin/productos?ok=eliminado");
     }
-    // Other errors shouldn't happen for toggle, but handle gracefully
+    if (result.error === "needs-review") {
+      redirect("/admin/productos?error=needs-review");
+    }
     redirect("/admin/productos");
   }
 

@@ -140,4 +140,19 @@ describe("ToggleActiveButton", () => {
       expect(formData.get("productId")).toBe("123");
     });
   });
+
+  it("con needsReview e inactivo: botón deshabilitado con explicación", () => {
+    render(<ToggleActiveButton action={mockAction} isActive={false} productId={3} needsReview />);
+
+    const button = screen.getByRole("button", { name: "Activar" });
+    expect(button).toBeDisabled();
+    expect(screen.getByText("Guarda tu enlace de afiliado para poder activarlo.")).toBeInTheDocument();
+    expect(button).toHaveAttribute("aria-describedby", "review-hint-3");
+  });
+
+  it("con needsReview pero activo: se puede desactivar", () => {
+    render(<ToggleActiveButton action={mockAction} isActive={true} productId={3} needsReview />);
+
+    expect(screen.getByRole("button", { name: "Desactivar" })).toBeEnabled();
+  });
 });

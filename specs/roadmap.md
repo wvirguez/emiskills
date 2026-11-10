@@ -41,7 +41,7 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 
 ## Bloque E — Integración Hotmart
 - [x] **Fase 24:** Cliente de la API de Hotmart (autenticación y lectura de productos).
-- [ ] **Fase 25:** Sincronización de productos Hotmart a la base de datos.
+- [x] **Fase 25:** Sincronización de productos Hotmart a la base de datos.
 - [ ] **Fase 26:** Endpoint de webhooks con verificación de firma.
 - [ ] **Fase 27:** Manejo de eventos del webhook (actualizar/desactivar productos).
 

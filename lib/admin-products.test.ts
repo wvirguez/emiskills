@@ -73,6 +73,8 @@ describe("listProductsForAdmin", () => {
         isActive: true,
         categoryId: 1,
         platformId: 1,
+        needsReview: false,
+        externalId: null,
         _count: { clicks: 5 },
         createdAt: new Date(now.getTime() + 1000),
         updatedAt: now,
@@ -94,6 +96,8 @@ describe("listProductsForAdmin", () => {
         isActive: false,
         categoryId: 2,
         platformId: 2,
+        needsReview: false,
+        externalId: null,
         _count: { clicks: 0 },
         createdAt: now,
         updatedAt: now,
@@ -114,6 +118,8 @@ describe("listProductsForAdmin", () => {
         price: "100",
         isActive: true,
         clickCount: 5,
+        isHotmart: false,
+        needsReview: false,
       },
       {
         id: 2,
@@ -124,6 +130,8 @@ describe("listProductsForAdmin", () => {
         price: "200",
         isActive: false,
         clickCount: 0,
+        isHotmart: false,
+        needsReview: false,
       },
     ]);
     expect(mocks.productFindMany.mock.calls[0][0]).toEqual({
@@ -421,6 +429,53 @@ describe("updateProduct", () => {
     platform: { slug: "plat1", name: "Plat 1" },
   };
 
+  describe("needsReview (productos de Hotmart)", () => {
+    const row = { ...baseRow, needsReview: false, externalId: "1" };
+
+    it("guardar un enlace de afiliado distinto limpia needsReview", async () => {
+      mocks.productFindUnique.mockResolvedValue({ affiliateUrl: "https://pay.hotmart.com/X", needsReview: true });
+      mocks.productUpdate.mockResolvedValue(row);
+
+      const res = await updateProduct(1, { affiliateUrl: "https://hotmart.com/aff/mio", isActive: true });
+
+      expect(res.ok).toBe(true);
+      expect(mocks.productUpdate.mock.calls[0][0].data.needsReview).toBe(false);
+    });
+
+    it("el mismo enlace no limpia needsReview y bloquea la activación", async () => {
+      mocks.productFindUnique.mockResolvedValue({ affiliateUrl: "https://pay.hotmart.com/X", needsReview: true });
+
+      const res = await updateProduct(1, { affiliateUrl: "https://pay.hotmart.com/X", isActive: true });
+
+      expect(res).toEqual({ ok: false, error: "needs-review" });
+      expect(mocks.productUpdate).not.toHaveBeenCalled();
+    });
+
+    it("el mismo enlace sin activar guarda sin tocar needsReview", async () => {
+      mocks.productFindUnique.mockResolvedValue({ affiliateUrl: "https://pay.hotmart.com/X", needsReview: true });
+      mocks.productUpdate.mockResolvedValue({ ...row, needsReview: true });
+
+      const res = await updateProduct(1, { affiliateUrl: "https://pay.hotmart.com/X", isActive: false });
+
+      expect(res.ok).toBe(true);
+      expect(mocks.productUpdate.mock.calls[0][0].data).not.toHaveProperty("needsReview");
+    });
+
+    it("producto manual (needsReview=false) con otro enlace no cambia needsReview", async () => {
+      mocks.productFindUnique.mockResolvedValue({ affiliateUrl: "https://a.com", needsReview: false });
+      mocks.productUpdate.mockResolvedValue(row);
+
+      await updateProduct(1, { affiliateUrl: "https://b.com" });
+
+      expect(mocks.productUpdate.mock.calls[0][0].data).not.toHaveProperty("needsReview");
+    });
+
+    it("not-found si no existe al comparar el enlace", async () => {
+      mocks.productFindUnique.mockResolvedValue(null);
+      expect(await updateProduct(9, { affiliateUrl: "https://x.com" })).toEqual({ ok: false, error: "not-found" });
+    });
+  });
+
   it("actualiza los campos proporcionados (no toca el slug)", async () => {
     mocks.categoryFindUnique.mockResolvedValue({ id: 2 });
     mocks.productUpdate.mockResolvedValue({
@@ -565,7 +620,7 @@ describe("setProductActive", () => {
 
     expect(res).toEqual({ ok: true, isActive: true });
     expect(mocks.productUpdate.mock.calls[0][0]).toEqual({
-      where: { id: 1 },
+      where: { id: 1, needsReview: false },
       data: { isActive: true },
       select: { id: true },
     });
@@ -578,6 +633,23 @@ describe("setProductActive", () => {
 
     expect(res).toEqual({ ok: true, isActive: false });
     expect(mocks.productUpdate.mock.calls[0][0].data).toEqual({ isActive: false });
+  });
+
+  it("devuelve needs-review si el producto existe pero está pendiente de revisión", async () => {
+    mocks.productUpdate.mockRejectedValue(
+      new Prisma.PrismaClientKnownRequestError("Record not found", { code: "P2025", clientVersion: "1.0.0" }),
+    );
+    mocks.productFindUnique.mockResolvedValue({ needsReview: true });
+
+    const res = await setProductActive(7, true);
+
+    expect(res).toEqual({ ok: false, error: "needs-review" });
+  });
+
+  it("desactivar no exige revisión", async () => {
+    mocks.productUpdate.mockResolvedValue({ id: 1 });
+    await setProductActive(1, false);
+    expect(mocks.productUpdate.mock.calls[0][0].where).toEqual({ id: 1 });
   });
 
   it("devuelve not-found si el producto no existe (P2025)", async () => {

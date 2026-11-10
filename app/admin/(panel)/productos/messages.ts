@@ -25,6 +25,9 @@ export function getOkMessage(ok: string | null): string | null {
 }
 
 export function getErrorMessage(error: string | null, count?: string | null): string | null {
+  if (error === "needs-review") {
+    return "No se puede activar: el producto viene de Hotmart y aún tiene el enlace de la oferta. Guarda tu enlace de afiliado primero.";
+  }
   if (error === "has-clicks") {
     const clickCount = count ? parseInt(count, 10) : 0;
     if (clickCount === 1) {

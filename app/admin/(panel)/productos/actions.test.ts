@@ -270,6 +270,25 @@ describe("updateProductAction", () => {
     expect(mocks.revalidatePath).not.toHaveBeenCalled();
   });
 
+  it("needs-review → retorna error explicativo", async () => {
+    mocks.updateProduct.mockResolvedValue({ ok: false, error: "needs-review" });
+    const formData = new FormData();
+    formData.set("title", "Producto Actualizado");
+    formData.set("shortDescription", "Descripción válida");
+    formData.set("price", "29.99");
+    formData.set("affiliateUrl", "https://ejemplo.com/producto");
+    formData.set("categoryId", "1");
+    formData.set("platformId", "1");
+    formData.set("currency", "USD");
+    formData.set("language", "es");
+    formData.set("isActive", "true");
+
+    const res = await updateProductAction(1, undefined, formData);
+
+    expect(res?.error).toContain("enlace de afiliado");
+    expect(mocks.revalidatePath).not.toHaveBeenCalled();
+  });
+
   it("éxito → llama revalidatePath y redirect", async () => {
     const formData = new FormData();
     formData.set("title", "Producto Actualizado");
@@ -345,6 +364,17 @@ describe("toggleProductActiveAction", () => {
     expect(mocks.revalidatePath).toHaveBeenCalledWith("/productos");
     expect(mocks.revalidatePath).toHaveBeenCalledWith("/productos/[slug]", "page");
     expect(mocks.redirect).toHaveBeenCalledWith("/admin/productos?ok=desactivado");
+  });
+
+  it("activar un producto pendiente de revisión → redirige con error=needs-review", async () => {
+    mocks.setProductActive.mockResolvedValue({ ok: false, error: "needs-review" });
+    const formData = new FormData();
+    formData.set("isActive", "true");
+
+    await expect(toggleProductActiveAction(1, undefined, formData)).rejects.toThrow(
+      "NEXT_REDIRECT:/admin/productos?error=needs-review",
+    );
+    expect(mocks.revalidatePath).not.toHaveBeenCalled();
   });
 
   it("activar producto → llama revalidatePath y redirect con ok=activado", async () => {

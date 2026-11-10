@@ -63,6 +63,13 @@ export default async function EditarProductoPage({ params }: PageProps) {
         </div>
       </div>
 
+      {product.needsReview && (
+        <div role="note" className="p-3 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-md max-w-3xl">
+          Este producto se sincronizó desde Hotmart. El enlace actual es el de la oferta del productor, no de
+          afiliado. Guarda tu enlace de afiliado, revisa descripción, categoría e imagen, y luego actívalo.
+        </div>
+      )}
+
       <div className="bg-white rounded-lg border border-gray-200 p-6 max-w-3xl">
         <ProductForm
           action={boundUpdateAction}

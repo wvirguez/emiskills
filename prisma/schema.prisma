@@ -41,6 +41,10 @@ model Product {
   imageGradient     String?   @db.VarChar(100)
   affiliateUrl      String    @db.VarChar(500)
   isActive          Boolean   @default(true)
+  externalId        String?   @unique @db.VarChar(50)
+  externalUcode     String?   @db.VarChar(50)
+  needsReview       Boolean   @default(false)
+  syncedAt          DateTime?
   categoryId        Int
   platformId        Int
   createdAt         DateTime  @default(now())

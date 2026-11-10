@@ -7,6 +7,8 @@ vi.mock("@/lib/auth/session", () => ({
   verifySession: vi.fn().mockResolvedValue({ userId: 1 }),
 }));
 
+vi.mock("./sync-action", () => ({ syncHotmartAction: vi.fn() }));
+
 vi.mock("@/lib/admin-products", () => ({
   listProductsForAdmin: vi.fn(),
 }));
@@ -41,6 +43,8 @@ describe("ProductosPage", () => {
         price: "29.99",
         isActive: true,
         clickCount: 5,
+        isHotmart: false,
+        needsReview: false,
       },
       {
         id: 2,
@@ -51,6 +55,8 @@ describe("ProductosPage", () => {
         price: "49.99",
         isActive: false,
         clickCount: 0,
+        isHotmart: false,
+        needsReview: false,
       },
     ]);
 
@@ -97,6 +103,8 @@ describe("ProductosPage", () => {
         price: "29.99",
         isActive: true,
         clickCount: 5,
+        isHotmart: false,
+        needsReview: false,
       },
     ]);
 
@@ -249,5 +257,35 @@ describe("ProductosPage", () => {
     );
 
     expect(screen.getByRole("link", { name: "Panel" })).toHaveAttribute("href", "/admin");
+  });
+
+  it("muestra el botón de sincronizar y las insignias Hotmart / Revisar enlace", async () => {
+    vi.mocked(listProductsForAdmin).mockResolvedValue([
+      {
+        id: 9,
+        slug: "h",
+        title: "Producto Hotmart",
+        category: { slug: "curso", name: "Curso" },
+        platform: { slug: "hotmart", name: "Hotmart" },
+        price: "10",
+        isActive: false,
+        clickCount: 0,
+        isHotmart: true,
+        needsReview: true,
+      },
+    ]);
+
+    render(await ProductosPage({ searchParams: Promise.resolve({}) }));
+
+    expect(screen.getByRole("button", { name: "Sincronizar con Hotmart" })).toBeInTheDocument();
+    expect(screen.getAllByText("Revisar enlace").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Hotmart", { selector: "span.rounded-full" }).length).toBeGreaterThan(0);
+    for (const btn of screen.getAllByRole("button", { name: "Activar" })) expect(btn).toBeDisabled();
+  });
+
+  it("muestra el mensaje de error=needs-review", async () => {
+    vi.mocked(listProductsForAdmin).mockResolvedValue([]);
+    render(await ProductosPage({ searchParams: Promise.resolve({ error: "needs-review" }) }));
+    expect(screen.getByRole("alert")).toHaveTextContent("enlace de afiliado");
   });
 });

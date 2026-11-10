@@ -6,6 +6,8 @@ export interface ToggleActiveButtonProps {
   action: (isActive: boolean, formData: FormData) => Promise<void>;
   isActive: boolean;
   productId: number;
+  /** Producto de Hotmart pendiente de poner el enlace de afiliado: no se puede activar. */
+  needsReview?: boolean;
 }
 
 interface ToggleState {
@@ -13,7 +15,7 @@ interface ToggleState {
   pending?: boolean;
 }
 
-export default function ToggleActiveButton({ action, isActive, productId }: ToggleActiveButtonProps) {
+export default function ToggleActiveButton({ action, isActive, productId, needsReview = false }: ToggleActiveButtonProps) {
   const [state, formAction, pending] = useActionState<ToggleState, FormData>(
     async (_prevState, formData) => {
       const newIsActive = formData.get("isActive") === "true";
@@ -27,13 +29,16 @@ export default function ToggleActiveButton({ action, isActive, productId }: Togg
     { error: undefined, pending: false }
   );
 
+  const blocked = needsReview && !isActive;
+
   return (
     <form action={formAction} className="inline">
       <input type="hidden" name="productId" value={String(productId)} />
       <input type="hidden" name="isActive" value={String(!isActive)} />
       <button
         type="submit"
-        disabled={pending}
+        disabled={pending || blocked}
+        aria-describedby={blocked ? `review-hint-${productId}` : undefined}
         className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${
           isActive
             ? "text-gray-700 bg-gray-100 border border-gray-200 hover:bg-gray-200 focus:ring-gray-500"
@@ -48,6 +53,11 @@ export default function ToggleActiveButton({ action, isActive, productId }: Togg
           ? "Desactivar"
           : "Activar"}
       </button>
+      {blocked && (
+        <p id={`review-hint-${productId}`} className="mt-1 text-xs text-amber-700">
+          Guarda tu enlace de afiliado para poder activarlo.
+        </p>
+      )}
       {state.error && (
         <p role="alert" className="mt-1 text-sm text-red-600" aria-live="polite">
           {state.error}
