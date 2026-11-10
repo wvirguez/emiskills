@@ -61,8 +61,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${tangerine.variable}  h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <a
+          href="#contenido"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-violet-700 focus:shadow-lg"
+        >
+          Saltar al contenido
+        </a>
         <Navbar />
-        <main>
+        <main id="contenido">
          {children}
         </main>
         <Footer />

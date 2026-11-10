@@ -9,7 +9,7 @@ export default function AffiliateNotice() {
         href="/#aviso-afiliados"
         className="underline hover:text-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 rounded min-h-[44px] inline-flex items-center"
       >
-        Más información
+        Más información sobre afiliados
       </Link>
     </p>
   );

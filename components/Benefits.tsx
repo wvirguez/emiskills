@@ -27,7 +27,7 @@ export default function Benefits() {
               <span className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-violet-600 text-white">
                 <Icon className="h-6 w-6" aria-hidden="true" />
               </span>
-              <h3 className="text-base font-semibold text-gray-900 sm:text-lg">{title}</h3>
+              <h2 className="text-base font-semibold text-gray-900 sm:text-lg">{title}</h2>
               <p className="mt-1 text-sm text-gray-600">{description}</p>
             </li>
           ))}

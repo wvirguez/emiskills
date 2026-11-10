@@ -57,6 +57,8 @@ export default function ProductDetail({ product }: { product: ProductDTO }) {
               <Link
                 href={`/go/${product.slug}`}
                 target="_blank"
+                // Sin prefetch: la ruta /go/ registra un clic en cada petición.
+                prefetch={false}
                 rel="sponsored nofollow noopener noreferrer"
                 className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-violet-600 px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-violet-700 sm:w-auto"
               >

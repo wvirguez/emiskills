@@ -40,9 +40,9 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
               Enlaces rápidos
-            </h3>
+            </h2>
             <ul className="space-y-3 text-base">
               <li>
                 <Link href="/#productos" className="hover:text-violet-400 transition-colors min-h-[44px] flex items-center">
@@ -69,9 +69,9 @@ export default function Footer() {
 
           {/* Affiliate Disclosure */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
               Aviso de afiliados
-            </h3>
+            </h2>
             <p className="text-base leading-relaxed text-gray-400">
               EmiSkills es un hub de productos digitales que muestra ofertas de varios productores. Cuando haces clic en un producto y te registras o compras en la plataforma del productor, podemos recibir una comisión por referencia. Las comisiones no influyen en el orden ni en la presentación de los productos.
             </p>
@@ -79,9 +79,9 @@ export default function Footer() {
 
           {/* Contact / Social */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-white mb-4">
               Estar Conectado
-            </h3>
+            </h2>
             <p className="text-sm text-gray-400 mb-4">
               Suscríbete para recibir los últimos cursos y ofertas
             </p>
@@ -122,10 +122,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 border-t border-gray-800 pt-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-base text-gray-500">
+          <p className="text-base text-gray-400">
             © {new Date().getFullYear()} EmiSkills. Todos los Derechos Reservados.
           </p>
-          <p className="text-base text-gray-500">
+          <p className="text-base text-gray-400">
             Diseñado con ❤️ para visitantes de todo el Mundo
           </p>
         </div>

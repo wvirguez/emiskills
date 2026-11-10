@@ -46,3 +46,10 @@ describe("SearchResults", () => {
     );
   });
 });
+
+describe("SearchResults encabezados", () => {
+  it("antepone un h2 (oculto) para no saltar de h1 a h3", () => {
+    render(<SearchResults result={page([make(1)])} />);
+    expect(screen.getByRole("heading", { level: 2, name: "Resultados" })).toBeInTheDocument();
+  });
+});

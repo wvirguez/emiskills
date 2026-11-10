@@ -20,3 +20,11 @@ describe("AffiliateNotice", () => {
     expect(link).toHaveAttribute("href", "/#aviso-afiliados");
   });
 });
+describe("AffiliateNotice accesibilidad", () => {
+  it("el enlace tiene un nombre accesible descriptivo", () => {
+    render(<AffiliateNotice />);
+    expect(
+      screen.getByRole("link", { name: /más información sobre afiliados/i }),
+    ).toHaveAttribute("href", "/#aviso-afiliados");
+  });
+});

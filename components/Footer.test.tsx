@@ -21,3 +21,11 @@ describe("Footer", () => {
     expect(screen.getByText(/Hotmart y de otros productores/)).toBeInTheDocument();
   });
 });
+
+describe("Footer encabezados", () => {
+  it("usa h2 (sin saltar niveles) para sus secciones", () => {
+    render(<Footer />);
+    expect(screen.queryAllByRole("heading", { level: 3 })).toHaveLength(0);
+    expect(screen.getAllByRole("heading", { level: 2 }).length).toBeGreaterThanOrEqual(3);
+  });
+});

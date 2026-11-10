@@ -21,6 +21,7 @@ export default function SearchResults({ result }: { result: ProductPage }) {
 
   return (
     <>
+      <h2 className="sr-only">Resultados</h2>
       <p className="mb-6 text-sm text-gray-600" aria-live="polite">
         {result.total} {result.total === 1 ? "producto" : "productos"}
       </p>

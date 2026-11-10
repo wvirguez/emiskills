@@ -3,7 +3,7 @@
 ## Existente (package.json)
 | Área | Tecnología |
 |---|---|
-| Framework | Next.js 16.2 (App Router) — **tiene cambios incompatibles; leer `node_modules/next/dist/docs/` antes de codificar** |
+| Framework | Next.js 16.4 (App Router) — **tiene cambios incompatibles; leer `node_modules/next/dist/docs/` antes de codificar** |
 | UI | React 19.2, Tailwind CSS 4, react-icons |
 | Lenguaje | TypeScript 5 |
 | Calidad | ESLint 9 + eslint-config-next |
@@ -17,6 +17,7 @@
 | Validación | **Zod** en límites (formularios, webhooks, API) | |
 | Integración | API de **Hotmart Developers** + webhooks | Cliente en `lib/hotmart/` (`fetch` + Zod, solo servidor). Variables `HOTMART_CLIENT_ID`, `HOTMART_CLIENT_SECRET`, `HOTMART_BASIC_TOKEN` y `HOTMART_ENV` (`sandbox` por defecto o `production`), opcionales para la web y validadas de forma lazy en `lib/env.ts`. Prueba manual: `npm run hotmart:check`. Sincronización a la BD: `lib/hotmart/sync.ts`, botón en `/admin/productos` o `npm run hotmart:sync` (los productos nuevos entran inactivos con `needsReview`; nunca se borran, solo se desactivan). Webhook: `POST /api/webhooks/hotmart/` (`lib/hotmart/webhook.ts`) verifica el `hottok` (cabecera `X-HOTMART-HOTTOK`, token fijo, no HMAC) contra `HOTMART_HOTTOK`, con comparación en tiempo constante; 503 sin variable, 401 token inválido, 400 cuerpo inválido, 200 válido (500 `processing_failed` si falla la BD). Eventos (`lib/hotmart/webhook-events.ts`): solo `PRODUCT_UPDATE` modifica productos vinculados (título, `externalUcode`, `syncedAt`; desactiva si el estado ≠ `ACTIVE`; nunca reactiva, crea ni borra; no toca precio); el resto se ignora con log. Como `trailingSlash: true`, configurar en Hotmart la URL **con barra final**. |
 | SEO | Metadatos con la Metadata API de Next.js; `app/sitemap.ts`, `app/robots.ts` y `app/opengraph-image.tsx` | Variable `SITE_URL` (URL pública sin barra final; opcional en desarrollo, obligatoria en producción) validada en `lib/env.ts` (`getSiteEnv()`). Helpers en `lib/site.ts` y `lib/seo.ts`. `robots` bloquea `/admin/`, `/go/` y `/api/`. |
+| Seguridad web | Cabeceras en `next.config.ts` (`headers()`): `nosniff`, `Referrer-Policy`, `X-Frame-Options: DENY`, `Permissions-Policy`; HSTS solo en producción. Sin CSP aún (requiere nonces). Los enlaces a `/go/` llevan `prefetch={false}` porque la ruta registra un clic en cada petición. | Informe en `specs/2026-11-10-rendimiento-accesibilidad-seguridad/informe.md`. |
 | Pruebas | **Vitest** (unitarias) + Testing Library; Playwright opcional para flujos clave | |
 | Desarrollo | 100 % local primero, con el MySQL local instalado en la máquina; **no usar el contenedor Docker** para pruebas ni verificaciones | Si el puerto del `.env` no coincide con el del servidor local, corregir el `.env`; no apuntar a otra instancia. |
 | Despliegue | **Hostinger** (hosting con Node.js) tras terminar el desarrollo local | Variables de entorno en el panel; `next build` + `next start`. |
