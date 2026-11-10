@@ -48,5 +48,5 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 ## Bloque F — Lanzamiento
 - [x] **Fase 28:** SEO básico (metadatos, sitemap, Open Graph).
 - [x] **Fase 29:** Revisión de rendimiento, accesibilidad y seguridad.
-- [ ] **Fase 30:** Preparar despliegue en Hostinger (build, variables, MySQL remoto).
+- [x] **Fase 30:** Preparar despliegue en Hostinger (build, variables, MySQL remoto).
 - [ ] **Fase 31:** Despliegue y verificación en producción.

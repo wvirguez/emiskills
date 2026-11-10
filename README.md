@@ -64,6 +64,7 @@ npm run db:studio
 
 Scripts: `db:generate` (cliente Prisma), `db:migrate`, `db:seed`, `db:studio`, `db:check`.
 `DATABASE_URL` incluye `connection_limit=3` para respetar los límites del hosting compartido (Hostinger).
+Para producción: `db:deploy` (migraciones) y `db:seed:prod` (solo plataformas y categorías base). Guía completa de despliegue en Hostinger: [DEPLOY.md](DEPLOY.md).
 El cliente se importa desde `@/lib/db` (`import { db } from "@/lib/db"`).
 
 > **Nota:** Las URLs de afiliado en el seed son ficticias (`https://example.com/...`) y no representan afiliaciones reales.

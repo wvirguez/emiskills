@@ -20,7 +20,7 @@
 | Seguridad web | Cabeceras en `next.config.ts` (`headers()`): `nosniff`, `Referrer-Policy`, `X-Frame-Options: DENY`, `Permissions-Policy`; HSTS solo en producción. Sin CSP aún (requiere nonces). Los enlaces a `/go/` llevan `prefetch={false}` porque la ruta registra un clic en cada petición. | Informe en `specs/2026-11-10-rendimiento-accesibilidad-seguridad/informe.md`. |
 | Pruebas | **Vitest** (unitarias) + Testing Library; Playwright opcional para flujos clave | |
 | Desarrollo | 100 % local primero, con el MySQL local instalado en la máquina; **no usar el contenedor Docker** para pruebas ni verificaciones | Si el puerto del `.env` no coincide con el del servidor local, corregir el `.env`; no apuntar a otra instancia. |
-| Despliegue | **Hostinger** (hosting con Node.js) tras terminar el desarrollo local | Variables de entorno en el panel; `next build` + `next start`. |
+| Despliegue | **Hostinger, modalidad Hosting Node.js** (decidido en Fase 30; VPS descartado) tras terminar el desarrollo local | Guía en `DEPLOY.md`. Variables de entorno en el panel; despliegue desde Git con Build command `npm ci --include=dev && npm run build` (garantiza devDependencies sin depender del panel; `prisma`, `tailwindcss`, `typescript`, `tsx` se usan en build/migraciones); `npm run build` + `npm start` (usa `PORT`); `engines.node >= 20.19` (Prisma 7 exige `^20.19 || ^22.12 || >=24`; Next 16 `>=20.9`); en el panel usar **Node 22.x** (Hostinger ofrece 24/22/20/18; 18 no es válido). Migraciones: `npm run db:deploy`; seed de producción: `npm run db:seed:prod` (solo plataformas y categorías, sin productos de ejemplo). |
 
 ## Base de datos local
 - **Fuente de verdad de la conexión:** `DATABASE_URL` en `.env`. Las pruebas manuales, `npm run db:check`, `npm run db:migrate`, `npm run db:seed` y `npm run build && npm start` usan esa variable. No se escriben credenciales en specs, código ni commits.
@@ -30,7 +30,7 @@
 - **Diagnóstico:** Prisma muestra `pool failed to retrieve a connection` (código 45028) para cualquier fallo de conexión; el motivo real (credenciales, plugin de autenticación, puerto) se ve conectando con el cliente `mysql` o el conector `mariadb` directamente.
 
 ## Riesgos / puntos abiertos
-- Confirmar que el plan de Hostinger contratado soporta aplicaciones Node.js (Next.js SSR). Si no, considerar VPS.
+- Confirmar que el plan de Hostinger contratado soporta aplicaciones Node.js (Next.js SSR). Confirmado en el panel de Web App: ofrece Node 24.x, 22.x, 20.x y 18.x, suficiente para usar 22.x; el resto se verifica en la Fase 31 (checklist en `DEPLOY.md`). Si no, considerar VPS.
 - Confirmar versión de MySQL de Hostinger y compatibilidad con el ORM elegido.
 - Los acuerdos de afiliación de Hotmart y de otros productores deben revisarse (uso de marca, enlaces).
 
