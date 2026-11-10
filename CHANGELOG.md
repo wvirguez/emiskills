@@ -2,8 +2,8 @@
 
 ## 2026-11-10
 
-- Feat: Cliente de la API de Hotmart (Fase 24) — módulo `lib/hotmart/` solo servidor con autenticación OAuth (token en caché y renovación automática), lectura paginada de productos y ofertas, errores tipados, reintentos acotados y timeout; variables `HOTMART_*` opcionales validadas en `lib/env.ts` con modo sandbox por defecto; script `npm run hotmart:check` para probar la conexión sin escribir en la base de datos; tests con respuestas simuladas
 - Feat: Métricas de clics en el panel (Fase 23) — página `/admin/metricas` con total de clics, clics por producto (incluye productos con 0), por categoría (con % del total) y por día en UTC (7/30 días rellenados con 0), rango elegido por URL (`?rango=7d|30d|todo`, por defecto 30 días); consultas en servidor sin dependencias nuevas ni migraciones; tarjeta "Métricas" del panel activa; tests de capa de datos, componentes y página
+- Feat: Cliente de la API de Hotmart (Fase 24) — módulo `lib/hotmart/` solo servidor con autenticación OAuth (token en caché y renovación automática), lectura paginada de productos y ofertas, errores tipados, reintentos acotados y timeout; variables `HOTMART_*` opcionales validadas en `lib/env.ts` con modo sandbox por defecto; script `npm run hotmart:check` para probar la conexión sin escribir en la base de datos; tests con respuestas simuladas
 
 ## 2026-11-09
 
