@@ -3,6 +3,13 @@ import { Geist, Geist_Mono, Tangerine } from "next/font/google";
 import "@/app/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { getSiteEnv } from "@/lib/env";
+import {
+  SITE_DEFAULT_DESCRIPTION,
+  SITE_DEFAULT_TITLE,
+  SITE_LOCALE,
+  SITE_NAME,
+} from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,10 +29,25 @@ const tangerine = Tangerine({
 
 });
 
-export const metadata: Metadata = {
-  title: "EmiSkills - Hub de Productos Digitales",
-  description: "Marketplace de productos digitales - cursos, ebooks, plantillas y membresías. Curaduría honesta para ayudarte a elegir el producto correcto.",
-};
+export function generateMetadata(): Metadata {
+  return {
+    metadataBase: new URL(getSiteEnv().SITE_URL),
+    title: { default: SITE_DEFAULT_TITLE, template: `%s | ${SITE_NAME}` },
+    description: SITE_DEFAULT_DESCRIPTION,
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      locale: SITE_LOCALE,
+      title: SITE_DEFAULT_TITLE,
+      description: SITE_DEFAULT_DESCRIPTION,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: SITE_DEFAULT_TITLE,
+      description: SITE_DEFAULT_DESCRIPTION,
+    },
+  };
+}
 
 
 export default function RootLayout({

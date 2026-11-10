@@ -169,6 +169,17 @@ export async function getProductBySlug(
   return row ? toProductDTO(row) : null;
 }
 
+export type SitemapProduct = { slug: string; updatedAt: Date };
+
+/** Productos activos para el sitemap (solo slug y fecha de actualización). */
+export async function getSitemapProducts(): Promise<SitemapProduct[]> {
+  return db.product.findMany({
+    where: { isActive: true },
+    select: { slug: true, updatedAt: true },
+    orderBy: { id: "asc" },
+  });
+}
+
 export async function getAffiliateUrlBySlug(slug: string): Promise<string | null> {
   const parsed = z.string().min(1).max(150).safeParse(slug);
   if (!parsed.success) return null;

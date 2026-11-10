@@ -61,7 +61,8 @@ async function fetchAllPages<S extends z.ZodType<{ items: unknown[]; page_info?:
     if (!parsed.success) throw new HotmartResponseError("La respuesta de Hotmart no tiene el formato esperado");
     all.push(...parsed.data.items);
     pageToken = parsed.data.page_info?.next_page_token;
-    if (!pageToken) return all;
+    // El sandbox de Hotmart sigue devolviendo next_page_token en páginas vacías: una página sin elementos es el final.
+    if (!pageToken || parsed.data.items.length === 0) return all;
   }
   throw new HotmartResponseError(`Se superó el máximo de ${MAX_PAGES} páginas al leer Hotmart`);
 }

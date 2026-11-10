@@ -46,7 +46,7 @@ Cada fase es pequeña (aprox. una sesión de trabajo), entrega algo verificable 
 - [x] **Fase 27:** Manejo de eventos del webhook (actualizar/desactivar productos).
 
 ## Bloque F — Lanzamiento
-- [ ] **Fase 28:** SEO básico (metadatos, sitemap, Open Graph).
+- [x] **Fase 28:** SEO básico (metadatos, sitemap, Open Graph).
 - [ ] **Fase 29:** Revisión de rendimiento, accesibilidad y seguridad.
 - [ ] **Fase 30:** Preparar despliegue en Hostinger (build, variables, MySQL remoto).
 - [ ] **Fase 31:** Despliegue y verificación en producción.

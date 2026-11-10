@@ -8,12 +8,15 @@ import SearchResults from "@/components/SearchResults";
 import AffiliateNotice from "@/components/AffiliateNotice";
 import { getCategories, getFilterOptions, getPlatforms, getProducts } from "@/lib/products";
 import { parseSearchParams } from "@/lib/search-params";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Catálogo de productos | EmiSkills",
+export const metadata: Metadata = buildMetadata({
+  title: "Catálogo de productos digitales",
   description:
-    "Busca y filtra cursos, ebooks, plantillas y membresías de varios productores.",
-};
+    "Busca y filtra cursos, ebooks, plantillas y membresías por categoría, precio, idioma y plataforma, y encuentra el producto que necesitas.",
+  // Canonical sin filtros: las combinaciones de búsqueda no se indexan por separado.
+  path: "/productos/",
+});
 
 type Props = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

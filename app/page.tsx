@@ -9,6 +9,14 @@ import AffiliateDisclosure from "@/components/AffiliateDisclosure"
 import AffiliateNotice from "@/components/AffiliateNotice"
 import FinalCTA from "@/components/FinalCTA"
 import { parseSearchParams } from "@/lib/search-params"
+import { buildMetadata } from "@/lib/seo"
+
+export const metadata = buildMetadata({
+  title: "EmiSkills: cursos, ebooks y plantillas digitales en un solo lugar",
+  description:
+    "Compara cursos, ebooks, plantillas y membresías de Hotmart y otros productores, y elige el que mejor se ajusta a ti. Somos afiliados: la compra se hace en la plataforma del productor.",
+  path: "/",
+})
 
 export default async function Home({
   searchParams,

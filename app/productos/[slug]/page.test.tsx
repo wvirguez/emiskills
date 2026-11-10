@@ -52,13 +52,23 @@ describe("ProductPage", () => {
   it("genera metadatos con título y descripción recortada", async () => {
     getProductBySlug.mockResolvedValue(product);
     const meta = await generateMetadata(props);
-    expect(meta.title).toBe("Curso Java | EmiSkills");
+    expect(meta.title).toBe("Curso Java");
+    expect(meta.alternates?.canonical).toBe("/productos/curso-java/");
+    expect(meta.openGraph).not.toHaveProperty("images");
     expect(String(meta.description).length).toBeLessThanOrEqual(160);
   });
 
   it("metadatos genéricos si no existe", async () => {
     getProductBySlug.mockResolvedValue(null);
     const meta = await generateMetadata(props);
-    expect(meta.title).toBe("Producto no encontrado | EmiSkills");
+    expect(meta.title).toBe("Producto no encontrado");
+    expect(meta.robots).toEqual({ index: false, follow: false });
+  });
+
+  it("usa la imagen del producto en Open Graph y Twitter", async () => {
+    getProductBySlug.mockResolvedValue({ ...product, imageUrl: "https://cdn.x/a.png" });
+    const meta = await generateMetadata(props);
+    expect(meta.openGraph).toMatchObject({ images: [{ url: "https://cdn.x/a.png" }] });
+    expect(meta.twitter).toMatchObject({ images: ["https://cdn.x/a.png"] });
   });
 });

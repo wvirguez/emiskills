@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseEnv, parseAdminEnv, parseHotmartEnv, parseHotmartWebhookEnv } from "@/lib/env";
+import { parseEnv, parseAdminEnv, parseHotmartEnv, parseHotmartWebhookEnv, parseSiteEnv } from "@/lib/env";
 
 describe("parseEnv", () => {
   it("acepta una DATABASE_URL de MySQL válida", () => {
@@ -89,6 +89,16 @@ describe("parseHotmartEnv", () => {
     expect(parseHotmartEnv(valid).HOTMART_ENV).toBe("sandbox");
   });
 
+  it("quita el prefijo 'Basic ' del token si se pegó completo", () => {
+    expect(parseHotmartEnv({ ...valid, HOTMART_BASIC_TOKEN: "Basic abc123" }).HOTMART_BASIC_TOKEN).toBe("abc123");
+    expect(parseHotmartEnv({ ...valid, HOTMART_BASIC_TOKEN: "basic  abc123 " }).HOTMART_BASIC_TOKEN).toBe("abc123");
+    expect(parseHotmartEnv(valid).HOTMART_BASIC_TOKEN).toBe("basic-abc");
+  });
+
+  it("rechaza un token que es solo el prefijo 'Basic'", () => {
+    expect(() => parseHotmartEnv({ ...valid, HOTMART_BASIC_TOKEN: "Basic " })).toThrow(/HOTMART_BASIC_TOKEN/);
+  });
+
   it("acepta production", () => {
     expect(parseHotmartEnv({ ...valid, HOTMART_ENV: "production" }).HOTMART_ENV).toBe("production");
   });
@@ -129,5 +139,27 @@ describe("parseHotmartWebhookEnv", () => {
 
   it("falla si está vacía sin exponer valores", () => {
     expect(() => parseHotmartWebhookEnv({ HOTMART_HOTTOK: "" })).toThrow(/vacía/);
+  });
+});
+
+describe("parseSiteEnv", () => {
+  it("acepta una URL https y quita la barra final", () => {
+    expect(parseSiteEnv({ SITE_URL: "https://emiskills.com/" }).SITE_URL).toBe(
+      "https://emiskills.com",
+    );
+  });
+
+  it("usa localhost por defecto fuera de producción", () => {
+    expect(parseSiteEnv({ NODE_ENV: "development" }).SITE_URL).toBe("http://localhost:3000");
+    expect(parseSiteEnv({}).SITE_URL).toBe("http://localhost:3000");
+  });
+
+  it("es obligatoria en producción", () => {
+    expect(() => parseSiteEnv({ NODE_ENV: "production" })).toThrow(/SITE_URL/);
+  });
+
+  it("rechaza URLs que no son http(s)", () => {
+    expect(() => parseSiteEnv({ SITE_URL: "ftp://x.com" })).toThrow(/http\(s\)/);
+    expect(() => parseSiteEnv({ SITE_URL: "emiskills.com" })).toThrow(/http\(s\)/);
   });
 });

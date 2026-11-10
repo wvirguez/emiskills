@@ -35,7 +35,7 @@ describe("esquema inicial: seed integration", () => {
     }
   });
 
-  it("después del seed existen 2 plataformas, 4 categorías y 6 productos con sus relaciones", async () => {
+  it("después del seed existen sus plataformas, categorías y productos con sus relaciones", async () => {
     if (!dbConnected) return;
     const platforms = await prisma!.platform.findMany();
     const categories = await prisma!.category.findMany();
@@ -43,9 +43,23 @@ describe("esquema inicial: seed integration", () => {
       include: { category: true, platform: true },
     });
 
-    expect(platforms).toHaveLength(2);
-    expect(categories).toHaveLength(4);
-    expect(products).toHaveLength(6);
+    // La BD local puede tener datos extra creados desde el admin: se comprueba que
+    // el seed esté presente, no que sea lo único que existe.
+    const slugs = (rows: { slug: string }[]) => rows.map((r) => r.slug);
+    expect(slugs(platforms)).toEqual(expect.arrayContaining(["hotmart", "manual"]));
+    expect(slugs(categories)).toEqual(
+      expect.arrayContaining(["curso", "ebook", "plantilla", "membresia"]),
+    );
+    expect(slugs(products)).toEqual(
+      expect.arrayContaining([
+        "desarrollo-java-fullstack",
+        "ebook-marketing-digital",
+        "plantilla-contrato",
+        "membresia-diseno",
+        "curso-photoshop-basico",
+        "plantilla-cv",
+      ]),
+    );
 
     // Verify each product has category and platform
     for (const product of products) {
@@ -192,7 +206,7 @@ describe("esquema inicial: seed integration", () => {
     for (const product of products) {
       await prisma2.product.upsert({
         where: { slug: product.slug },
-        update: product,
+        update: {}, // no pisar ediciones hechas desde el admin
         create: product,
       });
     }

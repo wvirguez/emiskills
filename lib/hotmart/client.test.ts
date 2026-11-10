@@ -108,9 +108,19 @@ describe("listProducts", () => {
     expect(p.format).toBe("NUEVO_FORMATO");
   });
 
+  it("termina en una página vacía aunque siga llegando next_page_token (sandbox)", async () => {
+    fetchMock
+      .mockResolvedValueOnce(tokenRes())
+      .mockResolvedValueOnce(json({ items: [rawProduct(1)], page_info: { next_page_token: "t2" } }))
+      .mockResolvedValueOnce(json({ items: [], page_info: { next_page_token: "t3" } }));
+    const products = await listProducts({}, opts);
+    expect(products.map((p) => p.id)).toEqual([1]);
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+
   it("respeta el tope de páginas", async () => {
     fetchMock.mockResolvedValueOnce(tokenRes());
-    fetchMock.mockImplementation(async () => json({ items: [], page_info: { next_page_token: "x" } }));
+    fetchMock.mockImplementation(async () => json({ items: [rawProduct(1)], page_info: { next_page_token: "x" } }));
     await expect(listProducts({}, opts)).rejects.toBeInstanceOf(HotmartResponseError);
     expect(fetchMock).toHaveBeenCalledTimes(1 + MAX_PAGES);
   });

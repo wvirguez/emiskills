@@ -31,6 +31,7 @@ import {
   getPlatforms,
   getProductBySlug,
   getProducts,
+  getSitemapProducts,
 } from "@/lib/products";
 
 const row = {
@@ -284,5 +285,20 @@ describe("getFilterOptions", () => {
     const first = mocks.productGroupBy.mock.calls[0][0];
     expect(first.where).toEqual({ isActive: true });
     expect(first.orderBy).toEqual({ _count: { currency: "desc" } });
+  });
+});
+
+describe("getSitemapProducts", () => {
+  it("devuelve solo slug y updatedAt de productos activos", async () => {
+    const updatedAt = new Date("2026-01-01");
+    mocks.productFindMany.mockResolvedValue([{ slug: "curso-a", updatedAt }]);
+    const result = await getSitemapProducts();
+    expect(result).toEqual([{ slug: "curso-a", updatedAt }]);
+    expect(mocks.productFindMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { isActive: true },
+        select: { slug: true, updatedAt: true },
+      }),
+    );
   });
 });

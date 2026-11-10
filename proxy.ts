@@ -6,7 +6,9 @@ export const config = {
 };
 
 export async function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  // Con `trailingSlash: true` llega "/admin/login/": se normaliza para no entrar en bucle de redirecciones.
+  const rawPathname = request.nextUrl.pathname;
+  const pathname = rawPathname.length > 1 ? rawPathname.replace(/\/+$/, "") : rawPathname;
 
   // Permitir acceso a /admin/login sin sesión
   if (pathname === "/admin/login") {

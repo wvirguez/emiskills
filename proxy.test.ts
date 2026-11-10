@@ -40,6 +40,20 @@ describe("proxy", () => {
     expect(response.status).toBe(200);
   });
 
+  it("permite /admin/login/ (con barra final) sin sesión, sin redirigir en bucle", async () => {
+    vi.mocked(verifySessionToken).mockReturnValue(null);
+    const response = await proxy(makeRequest("http://localhost/admin/login/"));
+    expect(response.status).toBe(200);
+    expect(response.headers.get("location")).toBeNull();
+  });
+
+  it("sin sesión, /admin/productos/ (barra final) redirige a login", async () => {
+    vi.mocked(verifySessionToken).mockReturnValue(null);
+    const response = await proxy(makeRequest("http://localhost/admin/productos/"));
+    expect(response.headers.get("location")).toContain("/admin/login");
+    expect(response.headers.get("location")).toContain("redirect=%2Fadmin%2Fproductos");
+  });
+
   it("permite acceso a /admin/login sin sesión", async () => {
     vi.mocked(verifySessionToken).mockReturnValue(null);
 

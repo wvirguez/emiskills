@@ -84,7 +84,10 @@ const hotmartEnvSchema = z.object({
     .min(1, "HOTMART_CLIENT_SECRET no puede estar vacía"),
   HOTMART_BASIC_TOKEN: z
     .string({ error: "HOTMART_BASIC_TOKEN es obligatoria" })
-    .min(1, "HOTMART_BASIC_TOKEN no puede estar vacía"),
+    .min(1, "HOTMART_BASIC_TOKEN no puede estar vacía")
+    // Hotmart muestra el token como "Basic xxxx"; el cliente ya antepone "Basic ".
+    .transform((value) => value.trim().replace(/^basic(\s+|$)/i, ""))
+    .refine((value) => value.length > 0, "HOTMART_BASIC_TOKEN no puede estar vacía"),
   HOTMART_ENV: z
     .enum(["sandbox", "production"], {
       error: "HOTMART_ENV debe ser 'sandbox' o 'production'",
@@ -142,4 +145,49 @@ export function parseHotmartWebhookEnv(
 /** Hottok validado (lazy, sin caché para reflejar cambios de entorno): solo falla al usar el webhook. */
 export function getHotmartWebhookEnv(): HotmartWebhookEnv {
   return parseHotmartWebhookEnv(process.env);
+}
+
+/** Esquema de la URL pública del sitio (SEO: canonical, sitemap, Open Graph). */
+const siteEnvSchema = z.object({
+  SITE_URL: z
+    .string({ error: "SITE_URL es obligatoria" })
+    .trim()
+    .min(1, "SITE_URL no puede estar vacía")
+    .refine((value) => /^https?:\/\/[^\s/]+(\/.*)?$/i.test(value), {
+      message: "SITE_URL debe ser una URL absoluta http(s)",
+    })
+    // Sin barra final, para componer rutas sin duplicar "/".
+    .transform((value) => value.replace(/\/+$/, "")),
+});
+
+export type SiteEnv = z.infer<typeof siteEnvSchema>;
+
+const DEFAULT_DEV_SITE_URL = "http://localhost:3000";
+
+/**
+ * Valida SITE_URL. Fuera de producción usa http://localhost:3000 si falta;
+ * en producción es obligatoria.
+ */
+export function parseSiteEnv(source: Record<string, string | undefined>): SiteEnv {
+  const raw = source.SITE_URL?.trim()
+    ? source.SITE_URL
+    : source.NODE_ENV === "production"
+      ? undefined
+      : DEFAULT_DEV_SITE_URL;
+  const result = siteEnvSchema.safeParse({ SITE_URL: raw });
+  if (!result.success) {
+    const details = result.error.issues
+      .map((issue) => `- ${issue.path.join(".")}: ${issue.message}`)
+      .join("\n");
+    throw new Error(`Variables de entorno del sitio inválidas:\n${details}`);
+  }
+  return result.data;
+}
+
+let siteCached: SiteEnv | undefined;
+
+/** URL pública validada (lazy). */
+export function getSiteEnv(): SiteEnv {
+  siteCached ??= parseSiteEnv(process.env);
+  return siteCached;
 }
