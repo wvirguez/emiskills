@@ -73,3 +73,45 @@ export function getAdminEnv(): AdminEnv {
   adminCached ??= parseAdminEnv(process.env);
   return adminCached;
 }
+
+/** Esquema de variables de Hotmart (opcionales para la web; obligatorias para el cliente de la API). */
+const hotmartEnvSchema = z.object({
+  HOTMART_CLIENT_ID: z
+    .string({ error: "HOTMART_CLIENT_ID es obligatoria" })
+    .min(1, "HOTMART_CLIENT_ID no puede estar vacía"),
+  HOTMART_CLIENT_SECRET: z
+    .string({ error: "HOTMART_CLIENT_SECRET es obligatoria" })
+    .min(1, "HOTMART_CLIENT_SECRET no puede estar vacía"),
+  HOTMART_BASIC_TOKEN: z
+    .string({ error: "HOTMART_BASIC_TOKEN es obligatoria" })
+    .min(1, "HOTMART_BASIC_TOKEN no puede estar vacía"),
+  HOTMART_ENV: z
+    .enum(["sandbox", "production"], {
+      error: "HOTMART_ENV debe ser 'sandbox' o 'production'",
+    })
+    .default("sandbox"),
+});
+
+export type HotmartEnv = z.infer<typeof hotmartEnvSchema>;
+
+/** Valida las variables de Hotmart; los mensajes nunca incluyen los valores. */
+export function parseHotmartEnv(
+  source: Record<string, string | undefined>
+): HotmartEnv {
+  const result = hotmartEnvSchema.safeParse(source);
+  if (!result.success) {
+    const details = result.error.issues
+      .map((i) => `  - ${i.path.join(".") || "env"}: ${i.message}`)
+      .join("\n");
+    throw new Error(`Variables de entorno de Hotmart inválidas:\n${details}`);
+  }
+  return result.data;
+}
+
+let hotmartCached: HotmartEnv | undefined;
+
+/** Variables de Hotmart validadas (lazy): solo fallan cuando se usa el cliente. */
+export function getHotmartEnv(): HotmartEnv {
+  hotmartCached ??= parseHotmartEnv(process.env);
+  return hotmartCached;
+}

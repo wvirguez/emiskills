@@ -15,7 +15,7 @@
 | Acceso a datos | **Prisma 7** con provider `mysql` y adaptador MariaDB (`@prisma/adapter-mariadb`) | Migraciones versionadas en `prisma/migrations/`; cliente en `lib/db.ts`; variables validadas en `lib/env.ts`. |
 | Autenticación admin | Sesión propia para un único rol admin (propuesto: **Auth.js** con credenciales, o JWT en cookie httpOnly) | Sin cuentas de visitantes. |
 | Validación | **Zod** en límites (formularios, webhooks, API) | |
-| Integración | API de **Hotmart Developers** + webhooks | Verificar firma/token del webhook. |
+| Integración | API de **Hotmart Developers** + webhooks | Cliente en `lib/hotmart/` (`fetch` + Zod, solo servidor). Variables `HOTMART_CLIENT_ID`, `HOTMART_CLIENT_SECRET`, `HOTMART_BASIC_TOKEN` y `HOTMART_ENV` (`sandbox` por defecto o `production`), opcionales para la web y validadas de forma lazy en `lib/env.ts`. Prueba manual: `npm run hotmart:check`. Verificar firma/token del webhook. |
 | Pruebas | **Vitest** (unitarias) + Testing Library; Playwright opcional para flujos clave | |
 | Desarrollo | 100 % local primero, con el MySQL local instalado en la máquina; **no usar el contenedor Docker** para pruebas ni verificaciones | Si el puerto del `.env` no coincide con el del servidor local, corregir el `.env`; no apuntar a otra instancia. |
 | Despliegue | **Hostinger** (hosting con Node.js) tras terminar el desarrollo local | Variables de entorno en el panel; `next build` + `next start`. |
