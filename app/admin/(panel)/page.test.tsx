@@ -43,20 +43,17 @@ describe("PanelPage", () => {
     expect(productosCard.querySelector('[class*="rounded-full"]')).not.toBeInTheDocument();
   });
 
-  it("renderiza tarjeta Métricas con estado 'Próximamente'", async () => {
+  it("renderiza la tarjeta Métricas como enlace a /admin/metricas", async () => {
     render(await PanelPage());
 
-    expect(screen.getByText("Métricas")).toBeInTheDocument();
-    const proximamenteLabels = screen.getAllByText("Próximamente");
-    expect(proximamenteLabels).toHaveLength(1);
+    const link = screen.getByRole("link", { name: /Métricas/i });
+    expect(link).toHaveAttribute("href", "/admin/metricas");
   });
 
-  it("tarjeta Métricas no es un enlace", async () => {
+  it("ya no muestra ninguna tarjeta 'Próximamente'", async () => {
     render(await PanelPage());
 
-    const metricasCard = screen.getByText("Métricas").closest("article");
-
-    expect(metricasCard).not.toHaveAttribute("href");
+    expect(screen.queryByText("Próximamente")).not.toBeInTheDocument();
   });
 
   it("renderiza título y descripción del panel", async () => {
