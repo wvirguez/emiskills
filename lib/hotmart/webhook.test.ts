@@ -1,7 +1,10 @@
 // @vitest-environment node
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+const mocks = vi.hoisted(() => ({ dispatch: vi.fn(), revalidate: vi.fn() }));
 vi.mock("server-only", () => ({}));
+vi.mock("next/cache", () => ({ revalidatePath: mocks.revalidate }));
+vi.mock("./webhook-events", () => ({ dispatchHotmartEvent: mocks.dispatch }));
 
 import { handleHotmartWebhook, verifyHottok } from "./webhook";
 import { POST } from "@/app/api/webhooks/hotmart/route";
@@ -30,6 +33,8 @@ describe("handleHotmartWebhook", () => {
   let info: ReturnType<typeof vi.spyOn>;
   beforeEach(() => {
     vi.stubEnv("HOTMART_HOTTOK", TOKEN);
+    mocks.dispatch.mockReset().mockResolvedValue("ignored:evento_no_soportado");
+    mocks.revalidate.mockReset();
     info = vi.spyOn(console, "info").mockImplementation(() => {});
     vi.spyOn(console, "error").mockImplementation(() => {});
   });
@@ -78,6 +83,30 @@ describe("handleHotmartWebhook", () => {
     expect(logged).not.toContain(TOKEN);
     expect(logged).not.toContain("ana@example.com");
     expect(logged).not.toContain("Ana");
+  });
+
+  it("500 si falla el procesamiento, sin filtrar el error", async () => {
+    mocks.dispatch.mockRejectedValue(new Error("secreto-interno"));
+    const res = await handleHotmartWebhook(req('{"event":"PRODUCT_UPDATE"}', ok));
+    expect(res.status).toBe(500);
+    expect(await res.json()).toEqual({ error: "processing_failed" });
+  });
+
+  it("revalida solo cuando hubo cambios", async () => {
+    mocks.dispatch.mockResolvedValue("updated");
+    await handleHotmartWebhook(req('{"event":"PRODUCT_UPDATE"}', ok));
+    expect(mocks.revalidate.mock.calls.map((c) => c[0])).toEqual(["/", "/productos", "/admin/productos"]);
+    mocks.revalidate.mockClear();
+    for (const r of ["unchanged", "ignored:producto_no_vinculado"]) {
+      mocks.dispatch.mockResolvedValue(r);
+      await handleHotmartWebhook(req('{"event":"PRODUCT_UPDATE"}', ok));
+    }
+    expect(mocks.revalidate).not.toHaveBeenCalled();
+  });
+
+  it("pasa el evento y los datos al despachador", async () => {
+    await handleHotmartWebhook(req('{"event":"PRODUCT_UPDATE","data":{"product":{"id":1}}}', ok));
+    expect(mocks.dispatch).toHaveBeenCalledWith("PRODUCT_UPDATE", { product: { id: 1 } });
   });
 
   it("la ruta POST delega en el handler", async () => {

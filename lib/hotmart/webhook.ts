@@ -1,7 +1,9 @@
 import "server-only";
 import { createHash, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 import { getHotmartWebhookEnv } from "../env";
+import { dispatchHotmartEvent, type EventResult } from "./webhook-events";
 
 /** Webhook de Hotmart: verifica el hottok y valida el cuerpo. Ver specs/2026-11-10-webhook-hotmart-firma. */
 
@@ -51,9 +53,25 @@ export async function handleHotmartWebhook(request: Request): Promise<Response> 
   const parsed = webhookPayloadSchema.safeParse(raw);
   if (!parsed.success) return json({ error: "invalid_payload" }, 400);
 
-  const { event, id, creation_date } = parsed.data;
+  const { event, id, creation_date, data } = parsed.data;
+  let result: EventResult;
+  try {
+    result = await dispatchHotmartEvent(event, data);
+  } catch {
+    console.error(`[hotmart-webhook] fallo al procesar ${event} id=${id ?? "-"}`);
+    return json({ error: "processing_failed" }, 500);
+  }
+
+  if (result === "updated" || result === "deactivated") {
+    try {
+      for (const path of ["/", "/productos", "/admin/productos"]) revalidatePath(path);
+    } catch {
+      console.error("[hotmart-webhook] no se pudo revalidar el caché");
+    }
+  }
+
   console.info(
-    `[hotmart-webhook] evento recibido: ${event} id=${id ?? "-"} fecha=${creation_date ?? "-"}`
+    `[hotmart-webhook] evento recibido: ${event} id=${id ?? "-"} fecha=${creation_date ?? "-"} resultado=${result}`
   );
   return json({ received: true }, 200);
 }
