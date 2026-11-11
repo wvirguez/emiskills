@@ -8,8 +8,8 @@ const pkg = JSON.parse(readFileSync("package.json", "utf8")) as {
 };
 
 describe("package.json (despliegue)", () => {
-  it("fija la versión mínima de Node", () => {
-    expect(pkg.engines?.node).toBe(">=20.19");
+  it("fija Node 22.x (Hostinger lee la versión de aquí)", () => {
+    expect(pkg.engines?.node).toBe("22.x");
   });
 
   it("define db:deploy con migrate deploy (nunca migrate dev)", () => {

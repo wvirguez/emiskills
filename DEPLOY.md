@@ -9,7 +9,7 @@ Guía para dejar **emiskills** listo en un plan de Hostinger con soporte Node.js
 | Requisito | Detalle |
 |---|---|
 | Plan | Debe incluir **aplicaciones Node.js** (SSR). Un hosting solo estático/PHP no sirve: **(verificar en el panel)**. |
-| Node.js | El panel de Hostinger ofrece 24.x, 22.x, 20.x y 18.x. **Elige 22.x** (versión con la que se desarrolla y prueba el proyecto). 24.x es compatible según los `engines` de las dependencias, pero no está probado aquí; 20.x solo sirve si resuelve a `>= 20.19`. **No uses 18.x**: Next.js 16 exige `>= 20.9` y Prisma 7 exige `^20.19 \|\| ^22.12 \|\| >=24`. |
+| Node.js | El panel de Hostinger ofrece 24.x, 22.x, 20.x y 18.x. **Se usa 22.x** (versión con la que se desarrolla y prueba el proyecto). **Hostinger toma la versión del campo `engines.node` de `package.json`** (hoy `22.x`) y no del selector del panel; si dejas un rango como `>=20.19`, elige la 20. 24.x es compatible según los `engines` de las dependencias, pero no está probado aquí; 20.x solo sirve si resuelve a `>= 20.19`. **No uses 18.x**: Next.js 16 exige `>= 20.9` y Prisma 7 exige `^20.19 \|\| ^22.12 \|\| >=24`. |
 | MySQL | Base de datos MySQL del propio plan (se crea en el panel). |
 | Dominio + HTTPS | Necesarios: las cabeceras activan HSTS en producción y `SITE_URL` debe ser `https://…`. |
 | Cuenta Hotmart | Credenciales de API de **producción** y hottok del webhook. |
@@ -66,7 +66,7 @@ npm run db:seed:prod   # plataformas (hotmart, manual) y categorías base; NO cr
 
 | Campo | Valor |
 |---|---|
-| Versión de Node | 22.x (mínimo 20.19; no 18.x) |
+| Versión de Node | 22.x (se fija en `engines.node` de `package.json`; no 18.x) |
 | Origen | Repositorio Git (rama `main`) o ZIP |
 | Directorio raíz | Raíz del proyecto (donde está `package.json`) |
 | Build command | `npm ci --include=dev && npm run build` (instala devDependencies pase lo que pase y compila) |
