@@ -20,6 +20,12 @@ describe("package.json (despliegue)", () => {
     expect(pkg.scripts["db:seed:prod"]).toBe("tsx prisma/seed.production.ts");
   });
 
+  it("build:deploy aplica migraciones y seed antes del build", () => {
+    expect(pkg.scripts["build:deploy"]).toBe(
+      "npm run db:deploy && npm run db:seed:prod && npm run build",
+    );
+  });
+
   it("start respeta el puerto del panel (PORT)", () => {
     expect(pkg.scripts.start).toBe("next start -p ${PORT:-3000}");
   });
