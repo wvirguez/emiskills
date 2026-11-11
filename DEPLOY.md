@@ -74,6 +74,8 @@ npm run db:seed:prod   # plataformas (hotmart, manual) y categorías base; NO cr
 
 **Por qué `--include=dev`:** `prisma`, `tailwindcss`/`@tailwindcss/postcss`, `typescript` y `tsx` están en `devDependencies` y hacen falta para el build y las migraciones. No hace falta averiguar si el panel instala devDependencies por defecto: con `npm ci --include=dev` en el *Build command* se instalan siempre, aunque el panel use `NODE_ENV=production`. Si tu panel solo tiene un campo de instalación y otro de build, pon `npm ci --include=dev` en el primero y `npm run build` en el segundo. La instalación ejecuta `prisma generate` (script `postinstall`).
 
+**Nota sobre el bundler:** `npm run build` ejecuta `next build --webpack`. En el primer despliegue real, Turbopack (el bundler por defecto de Next 16) falló en Hostinger al procesar `app/globals.css` (el proceso hijo de PostCSS terminaba antes de conectarse). Webpack procesa el CSS dentro del mismo proceso y compila igual. En local, `npm run dev` sigue usando Turbopack.
+
 **Cómo saber si funcionó:** en el log del primer despliegue (Git) debe aparecer `✓ Compiled successfully`. Si falla con `Cannot find module 'tailwindcss'` o `prisma: not found`, las devDependencies no se instalaron: revisa que el Build command sea exactamente el de la tabla.
 
 **Despliegue con Git:** conecta el repositorio y la rama `main` desde el panel (Hostinger pide autorizar GitHub o una clave de despliegue) **(verificar en el panel)**. Cada `git push` a esa rama puede redesplegar; confirma si el redespliegue es automático o manual en tu plan. Recuerda que `.env` no está en el repositorio: las variables se escriben en el panel.
@@ -108,6 +110,7 @@ y el mismo hottok que `HOTMART_HOTTOK`. Se hace en la Fase 31.
 | `ADMIN_PASSWORD_HASH debe tener formato scrypt$…` | El `$` se expandió: escápalo (`\$`) y no uses comillas. |
 | `/admin` redirige siempre al login | `SESSION_SECRET` ausente o cambiada, o el sitio no usa HTTPS (la cookie es `secure` en producción). |
 | Webhook responde 503 / 401 | Falta `HOTMART_HOTTOK` / token distinto. |
+| `FATAL: An unexpected Turbopack error` … `node process exited before we could connect to it` (en `globals.css`) | Turbopack no puede lanzar su proceso de PostCSS en el servidor. El script `build` usa `next build --webpack` para evitarlo; no lo cambies a `next build` a secas. |
 | `prisma: not found` / `Cannot find module 'tailwindcss'` | La instalación omitió devDependencies: usa `npm ci --include=dev` (sección 5). |
 | La app se reinicia y se pierde el bloqueo del login | El rate limit está en memoria; es esperado. |
 
