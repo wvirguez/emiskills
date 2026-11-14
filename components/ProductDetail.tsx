@@ -20,11 +20,13 @@ export default function ProductDetail({ product }: { product: ProductDTO }) {
           ← Volver al catálogo
         </Link>
 
-        <article className="mt-6 grid gap-8 lg:grid-cols-2">
+        <article className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)]">
           <div
-            className={`relative h-56 overflow-hidden rounded-2xl bg-gradient-to-br shadow-md lg:h-full lg:min-h-80 ${product.imageGradient ?? DEFAULT_GRADIENT}`}
+            className={`relative mx-auto aspect-square w-full max-w-md self-start overflow-hidden rounded-2xl shadow-md ring-1 ring-gray-100 lg:sticky lg:top-6 lg:mx-0 ${
+              product.imageUrl ? "bg-white" : `bg-gradient-to-br ${product.imageGradient ?? DEFAULT_GRADIENT}`
+            }`}
           >
-            <ProductImage src={product.imageUrl} />
+            <ProductImage src={product.imageUrl} fit="contain" />
             <span className="absolute top-4 right-4 inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-violet-700 backdrop-blur-sm">
               {product.category.name}
             </span>

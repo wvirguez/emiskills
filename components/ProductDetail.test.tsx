@@ -59,4 +59,19 @@ describe("ProductDetail", () => {
     expect(html).not.toContain("affiliateurl");
     expect(html).not.toMatch(/últimas|oferta limitada|más vendido/);
   });
+
+  it("muestra la imagen completa (object-contain) en un recuadro de tamaño fijo", () => {
+    const url = "https://emiskills.com/images/products/a.jpeg";
+    const { container } = render(<ProductDetail product={{ ...base, imageUrl: url }} />);
+    const img = container.querySelector("img");
+    expect(img).toHaveAttribute("src", url);
+    expect(img).toHaveClass("object-contain");
+    expect(img?.parentElement).toHaveClass("aspect-square", "max-w-md", "self-start");
+  });
+
+  it("sin imagen conserva el degradado", () => {
+    const { container } = render(<ProductDetail product={base} />);
+    expect(container.querySelector("img")).toBeNull();
+    expect(container.querySelector(".aspect-square.bg-gradient-to-br")).not.toBeNull();
+  });
 });
