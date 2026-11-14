@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ProductDTO } from "@/lib/products";
+import ProductImage from "./ProductImage";
 import { DEFAULT_GRADIENT } from "@/lib/product-ui";
 
 export default function ProductCard({ product }: { product: ProductDTO }) {
@@ -8,6 +9,7 @@ export default function ProductCard({ product }: { product: ProductDTO }) {
       <div
         className={`relative h-48 overflow-hidden bg-gradient-to-br ${product.imageGradient ?? DEFAULT_GRADIENT}`}
       >
+        <ProductImage src={product.imageUrl} />
         <div className="absolute top-4 right-4">
           <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-sm font-semibold text-violet-700 backdrop-blur-sm">
             {product.category.name}

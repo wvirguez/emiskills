@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ProductDTO } from "@/lib/products";
+import ProductImage from "./ProductImage";
 import { DEFAULT_GRADIENT } from "@/lib/product-ui";
 
 interface ProductCardCompactProps {
@@ -13,6 +14,7 @@ export default function ProductCardCompact({ product }: ProductCardCompactProps)
         data-testid="gradient-bg"
         className={`relative h-32 overflow-hidden bg-gradient-to-br ${product.imageGradient ?? DEFAULT_GRADIENT}`}
       >
+        <ProductImage src={product.imageUrl} />
         <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/20 to-transparent" />
       </div>
 

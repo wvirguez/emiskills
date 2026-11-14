@@ -41,6 +41,17 @@ describe("ProductCard", () => {
     expect(container.querySelector(".from-violet-500.to-fuchsia-500")).not.toBeNull();
   });
 
+  it("muestra la imagen del producto cuando hay imageUrl", () => {
+    const url = "https://emiskills.com/images/products/a.jpeg";
+    const { container } = render(<ProductCard product={{ ...product, imageUrl: url }} />);
+    expect(container.querySelector("img")).toHaveAttribute("src", url);
+  });
+
+  it("no renderiza <img> sin imageUrl", () => {
+    const { container } = render(<ProductCard product={product} />);
+    expect(container.querySelector("img")).toBeNull();
+  });
+
   it("no expone affiliateUrl", () => {
     const { container } = render(<ProductCard product={product} />);
     expect(container.innerHTML).not.toContain("affiliate");

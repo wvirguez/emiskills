@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ProductDTO } from "@/lib/products";
+import ProductImage from "./ProductImage";
 import { DEFAULT_GRADIENT, formatLanguage, formatPrice } from "@/lib/product-ui";
 import AffiliateNotice from "./AffiliateNotice";
 
@@ -23,6 +24,7 @@ export default function ProductDetail({ product }: { product: ProductDTO }) {
           <div
             className={`relative h-56 overflow-hidden rounded-2xl bg-gradient-to-br shadow-md lg:h-full lg:min-h-80 ${product.imageGradient ?? DEFAULT_GRADIENT}`}
           >
+            <ProductImage src={product.imageUrl} />
             <span className="absolute top-4 right-4 inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-violet-700 backdrop-blur-sm">
               {product.category.name}
             </span>
