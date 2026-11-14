@@ -3,6 +3,7 @@ import type { ProductDTO } from "@/lib/products";
 import ProductImage from "./ProductImage";
 import { DEFAULT_GRADIENT, formatLanguage, formatPrice } from "@/lib/product-ui";
 import AffiliateNotice from "./AffiliateNotice";
+import ExpandableText from "./ExpandableText";
 
 export default function ProductDetail({ product }: { product: ProductDTO }) {
   const paragraphs = (product.description ?? product.shortDescription)
@@ -48,11 +49,7 @@ export default function ProductDetail({ product }: { product: ProductDTO }) {
               </div>
             </dl>
 
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-gray-700">
-              {paragraphs.map((text, i) => (
-                <p key={i}>{text}</p>
-              ))}
-            </div>
+            <ExpandableText paragraphs={paragraphs} />
 
             <div className="mt-8 rounded-2xl bg-white p-6 shadow-md ring-1 ring-gray-100">
               <p className="text-3xl font-bold text-violet-600">
